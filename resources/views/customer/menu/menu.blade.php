@@ -20,6 +20,10 @@
                                     <i class="ph-bold ph-user text-xl"></i>
                                     <a href="{{ route('account.details') }}" class="heading8">Account</a>
                                 </div>
+                                <div class="item px-5 py-2 flex items-center gap-3 cursor-pointer">
+                                    <i class="ph-bold ph-files text-xl"></i>
+                                    <a href="{{ route('account.docs') }}" class="heading8">Documents</a>
+                                </div>
                                 <div class="item px-5 py-2 flex items-center gap-3 cursor-pointer mt-2">
                                     <i class="ph-bold ph-bag text-xl"></i>
                                     <a href="{{ route('view.service') }}" class="heading8">Services</a>

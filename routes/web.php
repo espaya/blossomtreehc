@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\docs\customer\DocsController;
 
 // Guest Routes
 Route::group(['middleware' => 'guest'], function() {
@@ -87,7 +88,8 @@ Route::group(['middleware' => ['auth', '2fa','verified', 'customer']], function(
     /*
     * docs signing routes
     */
-    
+    Route::get('/account/dashboard/documents', [DocsController::class, 'index'])->name('account.docs');
+
 
 });
 
