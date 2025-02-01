@@ -21,7 +21,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\docs\customer\AdvancedDirectiveController;
+use App\Http\Controllers\docs\customer\AuthorizationAgreementController;
+use App\Http\Controllers\docs\customer\AuthorizationForUseController;
+use App\Http\Controllers\docs\customer\ChargesForServicesController;
+use App\Http\Controllers\docs\customer\ConfidentialityPolicyController;
+use App\Http\Controllers\docs\customer\ConsentForServicesController;
+use App\Http\Controllers\docs\customer\ConsumerBillOfRightController;
+use App\Http\Controllers\docs\customer\ConsumerEmergencyController;
+use App\Http\Controllers\docs\customer\ContractFormAmendedController;
+use App\Http\Controllers\docs\customer\ContractorBioController;
+use App\Http\Controllers\docs\customer\DescriminationByeLawsController;
 use App\Http\Controllers\docs\customer\DocsController;
+use App\Http\Controllers\docs\customer\HippaController;
+use App\Http\Controllers\docs\customer\ListOfServicesController;
+use App\Http\Controllers\docs\customer\PolicyForInvestigatingController;
+use App\Http\Controllers\docs\customer\ReportingPatientAbuseController;
 
 // Guest Routes
 Route::group(['middleware' => 'guest'], function() {
@@ -89,7 +104,21 @@ Route::group(['middleware' => ['auth', '2fa','verified', 'customer']], function(
     * docs signing routes
     */
     Route::get('/account/dashboard/documents', [DocsController::class, 'index'])->name('account.docs');
-
+    Route::get('/account/dashboard/documents/advanced-directive-acknowledgement-hippa-home-care-privacy-rights', [AdvancedDirectiveController::class, 'index'])->name('account.advanced.directive');
+    Route::get('/account/dashboard/documents/authorization-agreement-and-acknowledgement', [AuthorizationAgreementController::class, 'index'])->name('account.authorization.agreement');
+    Route::get('/account/dashboard/documents/authorization-for-use-and-disclosure-of-protected-health-information', [AuthorizationForUseController::class, 'index'])->name('account.authorization.for.use');
+    Route::get('/account/dashboard/documents/charges-for-services', [ChargesForServicesController::class, 'index'])->name('account.charges.for.services');
+    Route::get('/account/dashboard/documents/confidentiality-policy', [ConfidentialityPolicyController::class, 'index'])->name('account.confidentiality.policy');
+    Route::get('/account/dashboard/documents/consent-for-services-and-financial-agreement', [ConsentForServicesController::class, 'index'])->name('account.consent.for.services');
+    Route::get('/account/dashboard/documents/consumer-bill-of-rights', [ConsumerBillOfRightController::class, 'index'])->name('account.consumer.bill.of.right');
+    Route::get('/account/dashboard/documents/consumer-emergency-and-contact-information', [ConsumerEmergencyController::class, 'index'])->name('account.consumer.emergency');
+    Route::get('/account/dashboard/documents/contract-form-amended-2024', [ContractFormAmendedController::class, 'index'])->name('account.contract.form-amended');
+    Route::get('/account/dashboard/documents/contractor-bio-review', [ContractorBioController::class, 'index'])->name('account.contractor.bio-review');
+    Route::get('/account/dashboard/documents/discrimination-bye-laws', [DescriminationByeLawsController::class, 'index'])->name('account.discrimination.bye-laws');
+    Route::get('/account/dashboard/documents/hippa', [HippaController::class, 'index'])->name('account.hippa');
+    Route::get('/account/dashboard/documents/list-of-services-provided', [ListOfServicesController::class, 'index'])->name('account.list.of.services');
+    Route::get('/account/dashboard/documents/policy-for-investigating-any-grievances-by-a-client-or-designated-representative', [PolicyForInvestigatingController::class, 'index'])->name('account.policy.for.investigating');
+    Route::get('/account/dashboard/documents/reporting-patient-abuse-and-neglect', [ReportingPatientAbuseController::class, 'index'])->name('account.reporting.patient');
 
 });
 
