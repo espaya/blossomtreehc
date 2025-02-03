@@ -67,7 +67,7 @@
                                     @endforelse
                                 </div>
                                 @if(empty($customService) && empty($myService))
-                                    <div class="heading8">No service(s) added. <a href="{{ route('view.service') }}">Click here</a> to add a service.</div>
+                                    <div class="heading8">No service(s) added. <a href="{{ route('view.service') }}"><u>Click here</u></a> to add a service.</div>
                                 @endif
                                 <div class="list-pagination w-full flex items-center justify-center gap-4 md:mt-10 mt-6"></div>
                             </div>

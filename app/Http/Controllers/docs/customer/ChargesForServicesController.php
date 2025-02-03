@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\docs\customer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\GeneralController;
 use Illuminate\Http\Request;
 
 class ChargesForServicesController extends Controller
@@ -14,6 +15,11 @@ class ChargesForServicesController extends Controller
 
     public function index()
     {
-        return view('customer.docs.charges_for_services');
+        $pageTitle = "Charges For Services";
+
+        $generalController = new GeneralController();
+        $user = $generalController->userProfile();
+
+        return view('customer.docs.charges_for_services', ['pageTitle' => $pageTitle, 'user' => $user]);
     }
 }

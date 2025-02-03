@@ -19,7 +19,7 @@ class GeneralController extends Controller
             return $user;
         } 
         catch (Exception $ex) {
-            //throw $th;
+            dd($ex);
         }
     }
 }

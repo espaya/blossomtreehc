@@ -21,7 +21,8 @@
                                 <li>☛ <a href="{{ route('account.consent.for.services') }}" class="text-blue-600 hover:underline">Consent For Services And Financial Agreement</a></li>
                                 <li>☛ <a href="{{ route('account.consumer.bill.of.right') }}" class="text-blue-600 hover:underline">Consumer Bill of Rights</a></li>
                                 <li>☛ <a href="{{ route('account.consumer.emergency') }}" class="text-blue-600 hover:underline">Consumer Emergency And Contact Information</a></li>
-                                <li>☛ <a href="{{ route('account.contract.form-amended') }}" class="text-blue-600 hover:underline">Contract Form Amended 2024</a></li>
+                                <?php $date = date('Y') ?>
+                                <li>☛ <a href="{{ route('account.contract.form-amended', ['date' => $date]) }}" class="text-blue-600 hover:underline">Contract Form Amended {{ $date }}</a></li>
                                 <li>☛ <a href="{{ route('account.contractor.bio-review') }}" class="text-blue-600 hover:underline">Contractor Bio Review</a></li>
                                 <li>☛ <a href="{{ route('account.discrimination.bye-laws') }}" class="text-blue-600 hover:underline">Discrimination Bye Laws</a></li>
                                 <li>☛ <a href="{{ route('account.hippa') }}" class="text-blue-600 hover:underline">HIPAA</a></li>

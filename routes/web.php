@@ -112,7 +112,7 @@ Route::group(['middleware' => ['auth', '2fa','verified', 'customer']], function(
     Route::get('/account/dashboard/documents/consent-for-services-and-financial-agreement', [ConsentForServicesController::class, 'index'])->name('account.consent.for.services');
     Route::get('/account/dashboard/documents/consumer-bill-of-rights', [ConsumerBillOfRightController::class, 'index'])->name('account.consumer.bill.of.right');
     Route::get('/account/dashboard/documents/consumer-emergency-and-contact-information', [ConsumerEmergencyController::class, 'index'])->name('account.consumer.emergency');
-    Route::get('/account/dashboard/documents/contract-form-amended-2024', [ContractFormAmendedController::class, 'index'])->name('account.contract.form-amended');
+    Route::get('/account/dashboard/documents/contract-form-amended-{date}', [ContractFormAmendedController::class, 'index'])->name('account.contract.form-amended');
     Route::get('/account/dashboard/documents/contractor-bio-review', [ContractorBioController::class, 'index'])->name('account.contractor.bio-review');
     Route::get('/account/dashboard/documents/discrimination-bye-laws', [DescriminationByeLawsController::class, 'index'])->name('account.discrimination.bye-laws');
     Route::get('/account/dashboard/documents/hippa', [HippaController::class, 'index'])->name('account.hippa');

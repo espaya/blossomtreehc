@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\docs\customer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\GeneralController;
 use Illuminate\Http\Request;
 
 class DescriminationByeLawsController extends Controller
@@ -14,6 +15,15 @@ class DescriminationByeLawsController extends Controller
 
     public function index()
     {
-        return view('customer.docs.descrimination_bye_laws');
+        
+        $generalController = new GeneralController(); 
+        $user = $generalController->userProfile();
+
+        $pageTitle = 'Discrimination Bye Laws';
+
+        return view('customer.docs.descrimination_bye_laws', [
+            'user' => $user, 
+            'pageTitle' => $pageTitle
+        ]);
     }
 }

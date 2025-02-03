@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\docs\customer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\GeneralController;
 use Illuminate\Http\Request;
 
 class HippaController extends Controller
@@ -13,7 +14,15 @@ class HippaController extends Controller
     }
 
     public function index()
-    {
-        return view('customer.docs.hippa');
+    {        
+        $generalController = new GeneralController();
+        $user = $generalController->userProfile();
+
+        $pageTitle = 'Hipaa';
+        
+        return view('customer.docs.hippa', [
+            'user' => $user, 
+            'pageTitle' => $pageTitle
+        ]);
     }
 }
