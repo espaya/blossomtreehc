@@ -29,17 +29,8 @@
         display: block;
         }
     </style>
-
-    <!-- Load the new Google Font for the signature -->
+    <!-- Load Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-
-    <style>
-        /* Ensure Great Vibes is applied globally */
-        @font-face {
-            font-family: 'Great Vibes';
-            src: url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
-        }
-    </style>
 
     <body>
         @include('templates/header') 
@@ -64,7 +55,7 @@
                                 @endif
 
                                 <p class="mt-5">
-                                    Client’s name: <u><i>{{ ucfirst($user->firstname) . ' ' . ucfirst($user->lastname) }}</i></u>
+                                    Client’s name: {{ ucfirst($user->firstname) . ' ' . ucfirst($user->lastname) }}
                                 </p>
                                 
                                 <div class="pass mt-5">
@@ -75,7 +66,7 @@
                                 </div>
                                 
                                 <p class="mt-5">
-                                I <u><i>{{ ucfirst($user->firstname) . ' ' . ucfirst($user->lastname) }}</i></u>
+                                I {{ ucfirst($user->firstname) . ' ' . ucfirst($user->lastname) }}
                                 acknowledge that the Agency has provided me with information which indicates that I may accept or reject any medical treatment, including any service specified:
                                 </p>
                                 
@@ -164,7 +155,7 @@
                                 <label for="agency_rep_signed_name" class="mr-2 block">Name And Signature:</label>
                                 <div class="flex items-center justify-between mt-5 w-full">
                                     <div class="w-1/2 pr-4"> <!-- Add padding-right for spacing -->
-                                        <u><i>{{ ucfirst($user->firstname) . ' ' . ucfirst($user->lastname) }}</i></u>
+                                        {{ ucfirst($user->firstname) . ' ' . ucfirst($user->lastname) }}
                                     </div>
 
                                     <!-- Checkbox for e-signature agreement -->
@@ -224,57 +215,59 @@
         <script src="{{asset('assets/js/main.js')}}"></script>
 
         <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const canvas = document.getElementById("signature-pad");
-        const ctx = canvas.getContext("2d");
-        const checkbox = document.getElementById("e-signature-checkbox");
-        const signatureInput = document.getElementById("signature-input");
+            document.addEventListener("DOMContentLoaded", function () {
+                const canvas = document.getElementById("signature-pad");
+                const ctx = canvas.getContext("2d");
+                const checkbox = document.getElementById("e-signature-checkbox");
+                const signatureInput = document.getElementById("signature-input");
 
-        function drawSignature() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous signature
+                function drawSignature() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous signature
 
-            // Ensure font loads before applying it
-            document.fonts.ready.then(() => {
-                ctx.font = "60px 'Great Vibes', cursive";
-                ctx.fillStyle = "#000"; // Black text color
-                ctx.textBaseline = "middle";
+                    // Wait for font to load before drawing
+                    document.fonts.ready.then(() => {
+                        ctx.font = "40px 'Great Vibes', cursive"; // Apply font only inside canvas
+                        ctx.fillStyle = "#000"; // Set text color
+                        ctx.textBaseline = "middle";
 
-                // Get user's name from backend
-                const userName = "{{ ucfirst($user->firstname) . ' ' . ucfirst($user->lastname) }}";
+                        // Get user's name from backend
+                        const userName = "{{ ucfirst($user->firstname) . ' ' . ucfirst($user->lastname) }}";
 
-                // Adjust position dynamically
-                const x = canvas.width / 10; // Start at 10% of canvas width
-                const y = canvas.height / 2; // Center vertically
+                        // Position dynamically
+                        const x = canvas.width / 10; // Start at 10% of canvas width
+                        const y = canvas.height / 2; // Center vertically
 
-                // Draw the signature on canvas
-                ctx.fillText(userName, x, y);
+                        // Draw the signature on canvas
+                        ctx.fillText(userName, x, y);
 
-                // Convert the canvas to an image (base64) and store it in the hidden textarea
-                signatureInput.value = canvas.toDataURL("image/png");
+                        // Convert canvas content to base64 image and store it
+                        signatureInput.value = canvas.toDataURL("image/png");
+                    }).catch(error => {
+                        console.error("Font loading failed:", error);
+                    });
+                }
+
+                function handleCheckboxState() {
+                    if (checkbox.checked) {
+                        canvas.style.display = "block"; // Show canvas
+                        // signatureInput.style.display = "block"; // Show input
+                        drawSignature(); // Draw signature
+                    } else {
+                        canvas.style.display = "none"; // Hide canvas
+                        signatureInput.style.display = "none"; // Hide input
+                        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+                        signatureInput.value = ""; // Clear stored signature
+                    }
+                }
+
+                // Listen for checkbox changes
+                checkbox.addEventListener("change", handleCheckboxState);
+
+                // Check initial state
+                handleCheckboxState();
             });
-        }
 
-        // Function to handle checkbox state
-        function handleCheckboxState() {
-            if (checkbox.checked) {
-                canvas.style.display = "block"; // Show canvas
-                // signatureInput.style.display = "block"; // Show hidden input
-                drawSignature(); // Draw the signature
-            } else {
-                canvas.style.display = "none"; // Hide canvas
-                signatureInput.style.display = "none"; // Hide hidden input
-                ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-                signatureInput.value = ""; // Clear stored signature
-            }
-        }
-
-        // Listen for checkbox change event
-        checkbox.addEventListener("change", handleCheckboxState);
-
-        // Check initial state on page load
-        handleCheckboxState();
-    });
-</script>
+    </script>
 
     </body>
 </html>

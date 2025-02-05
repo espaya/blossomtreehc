@@ -105,8 +105,14 @@ Route::group(['middleware' => ['auth', '2fa','verified', 'customer']], function(
     */
     Route::get('/account/dashboard/documents', [DocsController::class, 'index'])->name('account.docs');
     Route::get('/account/dashboard/documents/advanced-directive-acknowledgement-hippa-home-care-privacy-rights', [AdvancedDirectiveController::class, 'index'])->name('account.advanced.directive');
+    Route::post('/account/dashboard/documents/advanced-directive-acknowledgement-hippa-home-care-privacy-rights', [AdvancedDirectiveController::class, 'save'])->name('account.advanced.directive');
+
     Route::get('/account/dashboard/documents/authorization-agreement-and-acknowledgement', [AuthorizationAgreementController::class, 'index'])->name('account.authorization.agreement');
+    Route::post('/account/dashboard/documents/authorization-agreement-and-acknowledgement', [AuthorizationAgreementController::class, 'save'])->name('account.authorization.agreement');
+
     Route::get('/account/dashboard/documents/authorization-for-use-and-disclosure-of-protected-health-information', [AuthorizationForUseController::class, 'index'])->name('account.authorization.for.use');
+    Route::post('/account/dashboard/documents/authorization-for-use-and-disclosure-of-protected-health-information', [AuthorizationForUseController::class, 'index'])->name('account.authorization.for.use');
+
     Route::get('/account/dashboard/documents/charges-for-services', [ChargesForServicesController::class, 'index'])->name('account.charges.for.services');
     Route::get('/account/dashboard/documents/confidentiality-policy', [ConfidentialityPolicyController::class, 'index'])->name('account.confidentiality.policy');
     Route::get('/account/dashboard/documents/consent-for-services-and-financial-agreement', [ConsentForServicesController::class, 'index'])->name('account.consent.for.services');
