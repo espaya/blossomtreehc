@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('responsible_person_cell_phone')->nullable();
 
             $table->string('friend_relative_name')->nullable();
-            $table->string('relationship')->nullable();
+            $table->string('frient_relative_relationship')->nullable();
             $table->string('friend_relative_home_telephone')->nullable();
             $table->string('friend_relative_work_phone')->nullable();
             $table->string('friend_relative_cell_phone')->nullable();

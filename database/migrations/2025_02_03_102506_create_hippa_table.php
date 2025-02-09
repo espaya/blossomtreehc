@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('clients_rep_lastname')->nullable();
             $table->string('clients_rep_signature')->nullable();
             $table->string('clients_rep_date_signed')->nullable();
-            $table->string('customerID')->nullable();
             $table->string('agency_rep_name')->nullable();
             $table->string('agency_signature')->nullable();
             $table->string('agency_signed_date')->nullable();

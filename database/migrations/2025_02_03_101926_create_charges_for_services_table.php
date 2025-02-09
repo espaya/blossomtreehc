@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('agency_rep_signature')->nullable();
             $table->string('agency_rep_name')->nullable();
             $table->string('agency_date_signed')->nullable();
-            $table->string('agency_date_signed')->nullable();
             $table->string('customerID')->nullable();
             $table->timestamps();
         });

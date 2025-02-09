@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('agency_rep_signature')->nullable();
             $table->string('agency_rep_title')->nullable();
             $table->String('agency_signed_date')->nullable();
-            $table('customerID')->nullable();
+            $table->string('customerID')->nullable();
             $table->timestamps();
         });
     }
