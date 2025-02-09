@@ -56,7 +56,7 @@ class AdvancedDirectiveController extends Controller
 
             $signatureFileName = null;
 
-            $storagePath = storage_path('app/public/signatures');
+            $storagePath = public_path('signatures');
             
             if(!File::exists($storagePath))
             {
@@ -78,7 +78,7 @@ class AdvancedDirectiveController extends Controller
 
                 // Generate a unique file name
                 $signatureFileName = 'signature_' . time() . '.png';
-                $filePath = "public/signatures/$signatureFileName";
+                $filePath = "$storagePath/$signatureFileName";
 
                 // store
                 Storage::put($filePath, $encryptedSignature);
