@@ -27,7 +27,15 @@ class AdvancedDirectiveController extends Controller
         $generalController = new GeneralController();
         $user = $generalController->userProfile();
 
-        return view('customer.docs.advanced_directive_acknowledgement', ['pageTitle' => $pageTitle, 'user' => $user]);
+        $customerID = Auth::user()->id;
+
+        $advance = AdvancedDirective::where('customerID', $customerID)->get();
+
+        return view('customer.docs.advanced_directive_acknowledgement', [
+            'pageTitle' => $pageTitle, 
+            'user' => $user, 
+            'advance' => $advance
+        ]);
     }
 
     public function save(Request $request)
@@ -69,7 +77,7 @@ class AdvancedDirectiveController extends Controller
                 $encryptedSignature = Crypt::encryptString($imageData);
 
                 // Generate a unique file name
-                $signatureFileName = 'signature_' . time() . 'png';
+                $signatureFileName = 'signature_' . time() . '.png';
                 $filePath = "public/signatures/$signatureFileName";
 
                 // store
@@ -81,6 +89,7 @@ class AdvancedDirectiveController extends Controller
                 'living_will' => Crypt::encryptString($request->living_will),
                 'statutory_power' => Crypt::encryptString($request->statutory_power),
                 'clients_signature' => Crypt::encryptString($request->$signatureFileName),
+                'confirm' => Crypt::encrypt($request->confirm),
                 'clients_signed_date' => Crypt::encryptString($request->clients_signed_date),
                 'customerID' => Auth::user()->id
             ]);
