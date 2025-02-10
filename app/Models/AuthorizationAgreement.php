@@ -9,9 +9,12 @@ class AuthorizationAgreement extends Model
 {
     use HasFactory;
 
+    protected $table = 'authorization_agreement';
+
     protected $fillable = [
-        'consumer_signature',
+        'consumer_signature', 
         'consumer_signed_date',
+        
         'agency_rep_name',
         'agency_rep_signature',
         'agency_signed_date',
