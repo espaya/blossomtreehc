@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
+
 class AdvancedDirectiveController extends Controller
 {
     public function __construct()
@@ -27,9 +28,9 @@ class AdvancedDirectiveController extends Controller
         $generalController = new GeneralController();
         $user = $generalController->userProfile();
 
-        $customerID = Auth::user()->id;
-
-        $advance = AdvancedDirective::where('customerID', $customerID)->get();
+        $advance = AdvancedDirective::where('customerID', Auth::user()->id)->get();
+        
+        // dd($advance);
 
         return view('customer.docs.advanced_directive_acknowledgement', [
             'pageTitle' => $pageTitle, 
@@ -56,12 +57,13 @@ class AdvancedDirectiveController extends Controller
 
             $signatureFileName = null;
 
-            $storagePath = public_path('signatures');
-            
-            if(!File::exists($storagePath))
-            {
-                File::makeDirectory($storagePath, 0755, true, true);
+            $storagePath = public_path('signatures'); // Correct path
+
+            // Ensure the directory exists
+            if (!File::exists($storagePath)) {
+                File::makeDirectory($storagePath, 0755, true); // Remove extra boolean parameter
             }
+
 
             // convert the clients_signature into png, save the name to the db and the file to the directory
             if($request->has('clients_signature'))
@@ -73,26 +75,23 @@ class AdvancedDirectiveController extends Controller
                 $image = str_replace(' ', '+', $image);
                 $imageData = base64_decode($image);
 
-                // encrypt signature
-                $encryptedSignature = Crypt::encryptString($imageData);
-
                 // Generate a unique file name
                 $signatureFileName = 'signature_' . time() . '.png';
                 $filePath = "$storagePath/$signatureFileName";
 
                 // store
-                Storage::put($filePath, $encryptedSignature);
+                File::put($filePath, $imageData);
             }
 
             AdvancedDirective::create([
                 'medical_record_number' => Crypt::encryptString($request->medical_record_number),
                 'living_will' => Crypt::encryptString($request->living_will),
                 'statutory_power' => Crypt::encryptString($request->statutory_power),
-                'clients_signature' => Crypt::encryptString($request->$signatureFileName),
-                'confirm' => Crypt::encrypt($request->confirm),
+                'clients_signature' => Crypt::encryptString($signatureFileName), // Fixed here
+                'confirm' => Crypt::encryptString($request->confirm),
                 'clients_signed_date' => Crypt::encryptString($request->clients_signed_date),
                 'customerID' => Auth::user()->id
-            ]);
+            ]);            
 
             DB::commit(); // commit transaction
 
