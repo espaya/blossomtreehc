@@ -25,18 +25,23 @@ class AdvancedDirectiveController extends Controller
     {
         $pageTitle = 'Advanced Directive Acknowledgement - HIPAA Home Care Privacy Rights';
 
-        $generalController = new GeneralController();
-        $user = $generalController->userProfile();
+        try 
+        {
+            $generalController = new GeneralController();
+            $user = $generalController->userProfile();
 
-        $advance = AdvancedDirective::where('customerID', Auth::user()->id)->get();
-        
-        // dd($advance);
-
-        return view('customer.docs.advanced_directive_acknowledgement', [
-            'pageTitle' => $pageTitle, 
-            'user' => $user, 
-            'advance' => $advance
-        ]);
+            $advance = AdvancedDirective::where('customerID', Auth::user()->id)->get();
+            
+            return view('customer.docs.advanced_directive_acknowledgement', [
+                'pageTitle' => $pageTitle, 
+                'user' => $user, 
+                'advance' => $advance
+            ]);
+        }
+        catch(Exception $ex)
+        {
+            return redirect()->back()->with(['error' => $ex->getMessage()]);
+        }
     }
 
     public function save(Request $request)
