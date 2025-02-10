@@ -8,4 +8,7 @@
         <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
         <link rel="stylesheet" href="{{asset('dist/output-scss.css')}}">
         <link rel="stylesheet" href="{{asset('dist/output-tailwind.css')}}">
-    </head>
+            <!-- Load the new Google Font for the signature -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+</head>
