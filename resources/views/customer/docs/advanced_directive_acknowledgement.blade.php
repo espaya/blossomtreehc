@@ -29,7 +29,6 @@
       }
    </style>
    <!-- Load Google Font -->
-   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
    <body>
       @include('templates/header') 
       <div style="margin-top: -50px !important;" class="my-account-block ass">
