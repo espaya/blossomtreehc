@@ -111,7 +111,7 @@ Route::group(['middleware' => ['auth', '2fa','verified', 'customer']], function(
     Route::post('/account/dashboard/documents/authorization-agreement-and-acknowledgement', [AuthorizationAgreementController::class, 'save'])->name('account.authorization.agreement');
 
     Route::get('/account/dashboard/documents/authorization-for-use-and-disclosure-of-protected-health-information', [AuthorizationForUseController::class, 'index'])->name('account.authorization.for.use');
-    Route::post('/account/dashboard/documents/authorization-for-use-and-disclosure-of-protected-health-information', [AuthorizationForUseController::class, 'index'])->name('account.authorization.for.use');
+    Route::post('/account/dashboard/documents/authorization-for-use-and-disclosure-of-protected-health-information', [AuthorizationForUseController::class, 'save'])->name('account.authorization.for.use');
 
     Route::get('/account/dashboard/documents/charges-for-services', [ChargesForServicesController::class, 'index'])->name('account.charges.for.services');
     Route::get('/account/dashboard/documents/confidentiality-policy', [ConfidentialityPolicyController::class, 'index'])->name('account.confidentiality.policy');
