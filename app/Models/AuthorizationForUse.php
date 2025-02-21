@@ -9,8 +9,10 @@ class AuthorizationForUse extends Model
 {
     use HasFactory;
 
+    protected $table = 'authorization_for_use';
+
     protected $fillable = [
-        'consent',
+        'consent', 
         'disclose_to',
         'hiv',
         'alcohol_substance',
