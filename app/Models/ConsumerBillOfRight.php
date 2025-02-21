@@ -9,6 +9,8 @@ class ConsumerBillOfRight extends Model
 {
     use HasFactory;
 
+    protected $table = 'consumer_bill_of_right';
+
     protected $fillable = [
         'clients_signature',
         'clients_date_signed',
@@ -16,7 +18,7 @@ class ConsumerBillOfRight extends Model
         'clients_rep_signature',
         'clients_rep_firstname',
         'clients_rep_lastname',
-        'clients_signed_date',
+        'clients_rep_signed_date',
 
         'agency_rep_signature',
         'agency_rep_name',
