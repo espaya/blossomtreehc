@@ -20,6 +20,6 @@ class ChargesForServices extends Model
         'agency_rep_name',
         'agency_date_signed',
         'agency_date_signed',
-        'customerID'
+        'customerID' 
     ];
 }
