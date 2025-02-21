@@ -9,6 +9,8 @@ class ConsumerEmergency extends Model
 {
     use HasFactory;
 
+    protected $table = 'consumer_emergency';
+
     protected $fillable = [
         'soc',
         'telephone',
@@ -21,7 +23,7 @@ class ConsumerEmergency extends Model
         'responsible_person_cell_phone',
 
         'friend_relative_name',
-        'relationship',
+        'friend_relative_relationship',
         'friend_relative_home_telephone',
         'friend_relative_work_phone',
         'friend_relative_cell_phone',
