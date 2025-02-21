@@ -120,6 +120,8 @@ Route::group(['middleware' => ['auth', '2fa','verified', 'customer']], function(
     Route::post('/account/dashboard/documents/confidentiality-policy', [ConfidentialityPolicyController::class, 'save'])->name('account.confidentiality.policy');
 
     Route::get('/account/dashboard/documents/consent-for-services-and-financial-agreement', [ConsentForServicesController::class, 'index'])->name('account.consent.for.services');
+    Route::post('/account/dashboard/documents/consent-for-services-and-financial-agreement', [ConsentForServicesController::class, 'save'])->name('account.consent.for.services');
+
     Route::get('/account/dashboard/documents/consumer-bill-of-rights', [ConsumerBillOfRightController::class, 'index'])->name('account.consumer.bill.of.right');
     Route::get('/account/dashboard/documents/consumer-emergency-and-contact-information', [ConsumerEmergencyController::class, 'index'])->name('account.consumer.emergency');
     Route::get('/account/dashboard/documents/contract-form-amended-{date}', [ContractFormAmendedController::class, 'index'])->name('account.contract.form-amended');

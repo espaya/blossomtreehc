@@ -9,6 +9,8 @@ class ConsentForServices extends Model
 {
     use HasFactory;
 
+    protected $table = 'consent_for_services';
+
     protected $fillable = [
         'medical_record_number',
         'consent',

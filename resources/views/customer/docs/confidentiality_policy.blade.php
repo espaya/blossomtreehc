@@ -142,7 +142,6 @@
                                         @error('date_signed')
                                         <p style="color: red"> {{ $message }} </p>
                                         @enderror
-                                        
                                     </div>
 
                                     <div class="block-button md:mt-7 mt-4">

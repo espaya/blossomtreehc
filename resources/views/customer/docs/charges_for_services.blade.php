@@ -152,6 +152,7 @@
                         <br>
                         <p><b>OR</b></p>
                         <p>Client’s representative Signature: </p>
+                        
                         <input class="mt-5" {{ old('ee_signature') == '1' ? 'checked' : '' }} value="1" type="checkbox" name="ee_signature" id="ee-signature-checkbox"> 
                         <label for="ee-signature-checkbox">
                         By checking/ticking this box, I agree to adopt this as my electronic signature.
