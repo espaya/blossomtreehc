@@ -129,6 +129,8 @@ Route::group(['middleware' => ['auth', '2fa','verified', 'customer']], function(
     Route::post('/account/dashboard/documents/consumer-emergency-and-contact-information', [ConsumerEmergencyController::class, 'save'])->name('account.consumer.emergency');
 
     Route::get('/account/dashboard/documents/contract-form-amended-{date}', [ContractFormAmendedController::class, 'index'])->name('account.contract.form-amended');
+    Route::post('/account/dashboard/documents/contract-form-amended-{date}', [ContractFormAmendedController::class, 'save'])->name('account.contract.form-amended');
+
     Route::get('/account/dashboard/documents/contractor-bio-review', [ContractorBioController::class, 'index'])->name('account.contractor.bio-review');
     Route::get('/account/dashboard/documents/discrimination-bye-laws', [DescriminationByeLawsController::class, 'index'])->name('account.discrimination.bye-laws');
     Route::get('/account/dashboard/documents/hippa', [HippaController::class, 'index'])->name('account.hippa');

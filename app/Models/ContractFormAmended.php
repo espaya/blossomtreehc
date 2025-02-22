@@ -9,7 +9,10 @@ class ContractFormAmended extends Model
 {
     use HasFactory;
 
+    protected $table = 'contract_form_amended';
+
     protected $fillable = [
+        'initial',
         'clients_signature',
         'client_signed_date',
         'agency_rep_name',
