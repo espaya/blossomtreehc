@@ -93,7 +93,6 @@
 
 
                                 <div class="block-button md:mt-7 mt-4">
-                                    <!-- <button class="button-main">Submit</button> -->
                                     <a href="#" onclick="window.history.back();" class="button-main">Back</a>
                                 </div>
                             </div> 
