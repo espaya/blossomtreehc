@@ -132,8 +132,13 @@ Route::group(['middleware' => ['auth', '2fa','verified', 'customer']], function(
     Route::post('/account/dashboard/documents/contract-form-amended-{date}', [ContractFormAmendedController::class, 'save'])->name('account.contract.form-amended');
 
     Route::get('/account/dashboard/documents/contractor-bio-review', [ContractorBioController::class, 'index'])->name('account.contractor.bio-review');
+    Route::post('/account/dashboard/documents/contractor-bio-review', [ContractorBioController::class, 'save'])->name('account.contractor.bio-review');
+
     Route::get('/account/dashboard/documents/discrimination-bye-laws', [DescriminationByeLawsController::class, 'index'])->name('account.discrimination.bye-laws');
+
     Route::get('/account/dashboard/documents/hippa', [HippaController::class, 'index'])->name('account.hippa');
+    Route::post('/account/dashboard/documents/hippa', [HippaController::class, 'save'])->name('account.hippa');
+
     Route::get('/account/dashboard/documents/list-of-services-provided', [ListOfServicesController::class, 'index'])->name('account.list.of.services');
     Route::get('/account/dashboard/documents/policy-for-investigating-any-grievances-by-a-client-or-designated-representative', [PolicyForInvestigatingController::class, 'index'])->name('account.policy.for.investigating');
     Route::get('/account/dashboard/documents/reporting-patient-abuse-and-neglect', [ReportingPatientAbuseController::class, 'index'])->name('account.reporting.patient');

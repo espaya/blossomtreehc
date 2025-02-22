@@ -9,13 +9,13 @@ class ContractorBio extends Model
 {
     use HasFactory;
 
+    protected $table = 'contractor_bio';
+
     protected $fillable = [
-        'firstname',
-        'lastname',
         'date_of_birth',
         'social_security_number',
         'driver_license_number',
-        'email',
+        
         'home_address',
         'city',
         'state',
@@ -29,9 +29,8 @@ class ContractorBio extends Model
         'date_of_substance_abuse_check',
         'date_of_evaluation',
         'contractor_signature',
-        'contractor_firstname',
-        'contractor_lastname',
         'date',
+        
         'hr_representative_signature',
         'hr_firstname',
         'hr_lastname',
