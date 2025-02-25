@@ -121,7 +121,7 @@
                                     <b>LIST OF SERVICES PROVIDED</b>
                                 </p>
 
-                                @if(session('success'))
+                                    @if(session('success'))
                                         <p class="mt-5" style="color: green; text-align:center">{{ session('success') }}</p>
                                     @endif
 

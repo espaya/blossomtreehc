@@ -9,8 +9,9 @@ class PolicyForInvestigating extends Model
 {
     use HasFactory;
 
+    protected $table = 'policy_for_investigating';
+
     protected $fillable = [
-        'customerID',
         'clients_rep_name',
         'clients_rep_date',
         'agency_rep_name',
