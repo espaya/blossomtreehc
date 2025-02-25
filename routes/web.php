@@ -137,6 +137,7 @@ Route::group(['middleware' => ['auth', '2fa','verified', 'customer']], function(
     Route::post('/account/dashboard/documents/policy-for-investigating-any-grievances-by-a-client-or-designated-representative', [PolicyForInvestigatingController::class, 'save'])->name('account.policy.for.investigating');
 
     Route::get('/account/dashboard/documents/reporting-patient-abuse-and-neglect', [ReportingPatientAbuseController::class, 'index'])->name('account.reporting.patient');
+    Route::post('/account/dashboard/documents/reporting-patient-abuse-and-neglect', [ReportingPatientAbuseController::class, 'save'])->name('account.reporting.patient');
 });
 
 

@@ -9,6 +9,8 @@ class ReportingPatientAbuse extends Model
 {
     use HasFactory;
 
+    protected $table = 'reporting_patient_abuse';
+
     protected $fillable = [
         'clients_signature',
         'clients_date_signed',
