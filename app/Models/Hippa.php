@@ -9,6 +9,8 @@ class Hippa extends Model
 {
     use HasFactory;
 
+    protected $table = 'hippa';
+
     protected $fillable = [
         'clients_signature',
         'clients_signed_date',
@@ -16,7 +18,6 @@ class Hippa extends Model
         'clients_rep_lastname',
         'clients_rep_signature',
         'clients_rep_date_signed',
-        'customerID',
         'agency_rep_name',
         'agency_signature',
         'agency_signed_date',

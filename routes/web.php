@@ -116,9 +116,6 @@ Route::group(['middleware' => ['auth', '2fa','verified', 'customer']], function(
     Route::get('/account/dashboard/documents/charges-for-services', [ChargesForServicesController::class, 'index'])->name('account.charges.for.services');
     Route::post('/account/dashboard/documents/charges-for-services', [ChargesForServicesController::class, 'save'])->name('account.charges.for.services');
 
-    Route::get('/account/dashboard/documents/confidentiality-policy', [ConfidentialityPolicyController::class, 'index'])->name('account.confidentiality.policy');
-    Route::post('/account/dashboard/documents/confidentiality-policy', [ConfidentialityPolicyController::class, 'save'])->name('account.confidentiality.policy');
-
     Route::get('/account/dashboard/documents/consent-for-services-and-financial-agreement', [ConsentForServicesController::class, 'index'])->name('account.consent.for.services');
     Route::post('/account/dashboard/documents/consent-for-services-and-financial-agreement', [ConsentForServicesController::class, 'save'])->name('account.consent.for.services');
 
@@ -128,12 +125,6 @@ Route::group(['middleware' => ['auth', '2fa','verified', 'customer']], function(
     Route::get('/account/dashboard/documents/consumer-emergency-and-contact-information', [ConsumerEmergencyController::class, 'index'])->name('account.consumer.emergency');
     Route::post('/account/dashboard/documents/consumer-emergency-and-contact-information', [ConsumerEmergencyController::class, 'save'])->name('account.consumer.emergency');
 
-    Route::get('/account/dashboard/documents/contract-form-amended-{date}', [ContractFormAmendedController::class, 'index'])->name('account.contract.form-amended');
-    Route::post('/account/dashboard/documents/contract-form-amended-{date}', [ContractFormAmendedController::class, 'save'])->name('account.contract.form-amended');
-
-    Route::get('/account/dashboard/documents/contractor-bio-review', [ContractorBioController::class, 'index'])->name('account.contractor.bio-review');
-    Route::post('/account/dashboard/documents/contractor-bio-review', [ContractorBioController::class, 'save'])->name('account.contractor.bio-review');
-
     Route::get('/account/dashboard/documents/discrimination-bye-laws', [DescriminationByeLawsController::class, 'index'])->name('account.discrimination.bye-laws');
 
     Route::get('/account/dashboard/documents/hippa', [HippaController::class, 'index'])->name('account.hippa');
@@ -142,7 +133,6 @@ Route::group(['middleware' => ['auth', '2fa','verified', 'customer']], function(
     Route::get('/account/dashboard/documents/list-of-services-provided', [ListOfServicesController::class, 'index'])->name('account.list.of.services');
     Route::get('/account/dashboard/documents/policy-for-investigating-any-grievances-by-a-client-or-designated-representative', [PolicyForInvestigatingController::class, 'index'])->name('account.policy.for.investigating');
     Route::get('/account/dashboard/documents/reporting-patient-abuse-and-neglect', [ReportingPatientAbuseController::class, 'index'])->name('account.reporting.patient');
-
 });
 
 
@@ -153,6 +143,21 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/2fa/verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
     // Route to regenerate new 2FA code
     Route::post('/2fa/regenerate-opt', [TwoFactorController::class, 'regenerate'])->name('2fa.regenerate');
+});
+
+/**
+ * Contractor Route
+ * **/
+Route::group(['middleware' => ['auth', '2fa', 'verified', 'contractor']], function(){
+    Route::get('/account/dashboard/documents/contract-form-amended-{date}', [ContractFormAmendedController::class, 'index'])->name('account.contract.form-amended');
+    Route::post('/account/dashboard/documents/contract-form-amended-{date}', [ContractFormAmendedController::class, 'save'])->name('account.contract.form-amended');
+
+    Route::get('/account/dashboard/documents/contractor-bio-review', [ContractorBioController::class, 'index'])->name('account.contractor.bio-review');
+    Route::post('/account/dashboard/documents/contractor-bio-review', [ContractorBioController::class, 'save'])->name('account.contractor.bio-review');
+
+    Route::get('/account/dashboard/documents/confidentiality-policy', [ConfidentialityPolicyController::class, 'index'])->name('account.confidentiality.policy');
+    Route::post('/account/dashboard/documents/confidentiality-policy', [ConfidentialityPolicyController::class, 'save'])->name('account.confidentiality.policy');
+
 });
 
 
