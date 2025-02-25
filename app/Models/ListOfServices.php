@@ -9,6 +9,8 @@ class ListOfServices extends Model
 {
     use HasFactory;
 
+    protected $table = 'list_of_services';
+
     protected $fillable = [
         'client_legal_signature',
         'client_legal_date',

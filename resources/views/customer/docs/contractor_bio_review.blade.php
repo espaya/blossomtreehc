@@ -107,11 +107,11 @@
                                 <p class="mt-5" style="text-align: center;">CONTRACTOR BIO REVIEW</p>
 
                                     @if(session('success'))
-                                        <p class="mt-5" style="color: green;">{{ session('success') }}</p>
+                                        <p class="mt-5" style="color: green; text-align:center">{{ session('success') }}</p>
                                     @endif
 
                                     @if(session('error'))
-                                        <p class="mt-5" style="color: red;">{{ session('error') }}</p>
+                                        <p class="mt-5" style="color: red; text-align:center">{{ session('error') }}</p>
                                     @endif
 
                                     @if ($errors->any())

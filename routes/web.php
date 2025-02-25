@@ -131,6 +131,8 @@ Route::group(['middleware' => ['auth', '2fa','verified', 'customer']], function(
     Route::post('/account/dashboard/documents/hippa', [HippaController::class, 'save'])->name('account.hippa');
 
     Route::get('/account/dashboard/documents/list-of-services-provided', [ListOfServicesController::class, 'index'])->name('account.list.of.services');
+    Route::post('/account/dashboard/documents/list-of-services-provided', [ListOfServicesController::class, 'save'])->name('account.list.of.services');
+
     Route::get('/account/dashboard/documents/policy-for-investigating-any-grievances-by-a-client-or-designated-representative', [PolicyForInvestigatingController::class, 'index'])->name('account.policy.for.investigating');
     Route::get('/account/dashboard/documents/reporting-patient-abuse-and-neglect', [ReportingPatientAbuseController::class, 'index'])->name('account.reporting.patient');
 });
