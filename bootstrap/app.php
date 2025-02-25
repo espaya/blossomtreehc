@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\ContractorMiddleware;
 use App\Http\Middleware\CustomerMiddleware;
 use App\Http\Middleware\GuestMiddleware;
 use App\Http\Middleware\TwoFactorMiddleware;
@@ -24,6 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'guest' => GuestMiddleware::class,
             '2fa' => TwoFactorMiddleware::class,
             'Google2FA' => PragmaRX\Google2FA\Google2FA::class,
+            'contractor' => ContractorMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
