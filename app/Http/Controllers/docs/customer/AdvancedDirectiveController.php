@@ -54,6 +54,9 @@ class AdvancedDirectiveController extends Controller
             'clients_signature' => ['required'],
             'clients_signed_date' => ['required'],
             'e_signature' => ['required'],
+            'signatureText' => ['required_if:e_signature,1']
+        ], [
+            'signatureText.required_if' => 'Please enter your signature here'
         ]);
 
         try 
