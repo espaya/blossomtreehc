@@ -163,33 +163,43 @@
                                 <br><br>
                                 
                                 <label for="agency_rep_signed_name" class="mr-2 block">Consumer Name And Signature:</label>
-                                <div class="flex items-center justify-between mt-5 w-full">
-                                    <div class="w-1/2 pr-4"> <!-- Add padding-right for spacing -->
-                                        <u><i>{{ ucfirst($user->firstname . ' ' . $user->lastname) }}</i></u>
-                                    </div>
 
-                                    <!-- Checkbox for e-signature agreement -->
-                                    <div class="w-1/2 pl-4">
-                                        <input {{ old('e_signature') == '1' ? 'checked' : '' }} value="1" type="checkbox" name="e_signature" id="e-signature-checkbox"> 
+                                
+                                <p class="mt-5"> <i>{{ ucfirst($user->firstname . ' ' . $user->lastname) }}</i></p>
+
+                                <div class="mt-5">
+                                    <input {{ old('e_signature') == '1' ? 'checked' : '' }} value="1" type="checkbox" name="e_signature" id="e-signature-checkbox"> 
                                         <label for="e-signature-checkbox">
                                         By checking/ticking this box, I agree to adopt this as my electronic signature.
                                         </label>
+                                        @error('e_signature')
+                                        <p style="color: red;"> Please agree to adopt signature </p>
+                                        @enderror
+                                </div>
+                                        
+                                <div class="flex items-center justify-between mt-5 w-full">
+                                
+                                        
                                         <div class="flex-row">
                                             <div class="wrapper">
                                                 <!-- Signature Canvas -->
                                                 <canvas id="signature-pad" width="400" height="200" style="display: none; border:1px solid #000;"></canvas>
                                                 <!-- Hidden Signature Input -->
-                                                <textarea required style="display: none;" name="consumer_signature" id="signature-input"></textarea>
+                                                <textarea style="display: none;" name="consumer_signature" id="signature-input"></textarea>
                                             </div>
                                         </div>
                                         @error('clients_signature')
                                         <p style="color: red;">{{ $message }}</p>
                                         @enderror
-                                        @error('e_signature')
-                                        <p style="color: red;"> Please agree to adopt signature </p>
-                                        @enderror
-                                    </div>
+                                        
+                                </div>
 
+                                <div style="display: none" id="signature-text-div" class="pass mt-5"> 
+                                    Please type your signature here:
+                                    <input id="signature-text" name="signatureText" value="{{ old('signatureText') }}" class="border-line px-4 pt-3 pb-3 w-full rounded-lg" type="text" autocomplete="off">
+                                    @error('signatureText')
+                                        <p style="color: red;"> {{ $message }} </p>
+                                    @enderror
                                 </div>
 
                                 <div class="pass mt-5"> Date:
@@ -223,59 +233,64 @@
 
         
         <script>
-         document.addEventListener("DOMContentLoaded", function () {
-             const canvas = document.getElementById("signature-pad");
-             const ctx = canvas.getContext("2d");
-             const checkbox = document.getElementById("e-signature-checkbox");
-             const signatureInput = document.getElementById("signature-input");
-         
-             function drawSignature() {
-                 ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous signature
-         
-                 // Wait for font to load before drawing
-                 document.fonts.ready.then(() => {
-                     ctx.font = "40px 'Great Vibes', cursive"; // Apply font only inside canvas
-                     ctx.fillStyle = "#000"; // Set text color
-                     ctx.textBaseline = "middle";
-         
-                     // Get user's name from backend
-                     const userName = "{{ ucfirst($user->firstname) . ' ' . ucfirst($user->lastname) }}";
-         
-                     // Position dynamically
-                     const x = canvas.width / 10; // Start at 10% of canvas width
-                     const y = canvas.height / 2; // Center vertically
-         
-                     // Draw the signature on canvas
-                     ctx.fillText(userName, x, y);
-         
-                     // Convert canvas content to base64 image and store it
-                     signatureInput.value = canvas.toDataURL("image/png");
-                 }).catch(error => {
-                     console.error("Font loading failed:", error);
-                 });
-             }
-         
-             function handleCheckboxState() {
-                 if (checkbox.checked) {
-                     canvas.style.display = "block"; // Show canvas
-                     // signatureInput.style.display = "block"; // Show input
-                     drawSignature(); // Draw signature
-                 } else {
-                     canvas.style.display = "none"; // Hide canvas
-                     signatureInput.style.display = "none"; // Hide input
-                     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-                     signatureInput.value = ""; // Clear stored signature
-                 }
-             }
-         
-             // Listen for checkbox changes
-             checkbox.addEventListener("change", handleCheckboxState);
-         
-             // Check initial state
-             handleCheckboxState();
-         });
-         
-      </script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const canvas = document.getElementById("signature-pad");
+        const ctx = canvas.getContext("2d");
+        const checkbox = document.getElementById("e-signature-checkbox");
+        const signatureInput = document.getElementById("signature-input");
+        const signatureText = document.getElementById("signature-text");
+        const signatureTextDiv = document.getElementById("signature-text-div");
+
+        function drawSignature(text) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous signature
+
+            if (text.trim() !== "") {
+                ctx.font = "40px 'Great Vibes', cursive"; // Apply font only inside canvas
+                ctx.fillStyle = "#000"; // Set text color
+                ctx.textBaseline = "middle";
+
+                // Position dynamically
+                const x = canvas.width / 10; // Start at 10% of canvas width
+                const y = canvas.height / 2; // Center vertically
+
+                // Draw the signature on canvas
+                ctx.fillText(text, x, y);
+
+                // Convert canvas content to base64 image and store it
+                signatureInput.value = canvas.toDataURL("image/png");
+            }
+        }
+
+        function handleCheckboxState() {
+            if (checkbox.checked) {
+                canvas.style.display = "block"; // Show canvas
+                signatureTextDiv.style.display = "block"; // Show input field
+
+                // Draw the existing signature if present
+                drawSignature(signatureText.value);
+            } else {
+                canvas.style.display = "none"; // Hide canvas
+                signatureTextDiv.style.display = "none"; // Hide input field
+                ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+                signatureInput.value = ""; // Clear stored signature
+            }
+        }
+
+        // Listen for checkbox changes
+        checkbox.addEventListener("change", handleCheckboxState);
+
+        // Update the canvas when the user types in the signature input
+        signatureText.addEventListener("input", function () {
+            drawSignature(signatureText.value);
+        });
+
+        // Maintain signature on page reload
+        if (signatureText.value.trim() !== "") {
+            checkbox.checked = true;
+            handleCheckboxState();
+        }
+    });
+</script>
 
     </body>
 </html>

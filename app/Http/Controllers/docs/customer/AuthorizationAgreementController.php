@@ -47,7 +47,11 @@ class AuthorizationAgreementController extends Controller
     {
         $request->validate([
             'consumer_signature' => ['required'],
-            'consumer_signed_date' => ['required']
+            'consumer_signed_date' => ['required'],
+            'e_signature' => ['required'],
+            'signatureText' => ['required_if:e_signature,1']
+        ], [
+            'signatureText' => 'Please enter your signature here'
         ]);
 
         try 
