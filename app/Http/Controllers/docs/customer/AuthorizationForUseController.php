@@ -52,6 +52,10 @@ class AuthorizationForUseController extends Controller
             'consumer_rep_signature' => ['nullable'],
             'consumer_rep_date_signed' => ['required_if:ee_signature,1'],
             'consumer_name_authority' => ['required_if:ee_signature,1'],
+            'signatureText' => ['required_if:e_signature,1'],
+            'eeSignatureText' => ['required_if:ee_signature,1']
+        ], [
+            'signatureText.required_if' => 'Please enter your signature'
         ]);
 
         try  

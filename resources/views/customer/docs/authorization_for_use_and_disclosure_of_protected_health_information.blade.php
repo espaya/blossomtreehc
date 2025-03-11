@@ -212,14 +212,18 @@
                               <label for="e-signature-checkbox">
                               By checking/ticking this box, I agree to adopt this as my electronic signature.
                               </label>
-                        <div class="flex items-center justify-between mt-5 w-full">
-                           <div class="w-1/2 pl-4">
+
+                              @error('e_signature')
+                                 <p style="color: red;"> {{ $message }} </p>
+                                 @enderror
+
+                           <div class="w-full pl-4 mt-5">
                               <div class="flex-row">
                                  <div class="wrapper">
                                     <!-- Signature Canvas -->
                                     <canvas id="signature-pad" width="400" height="200" style="display: none; border:1px solid #000;"></canvas>
                                     <!-- Hidden Signature Input -->
-                                    <textarea required style="display: none;" name="consumer_signature" id="signature-input"></textarea>
+                                    <textarea style="display: none;" name="consumer_signature" id="signature-input"></textarea>
                                  </div>
                               </div>
                               @error('consumer_signature')
@@ -229,31 +233,42 @@
                               <p style="color: red;"> Please agree to adopt signature </p>
                               @enderror
                            </div>
-                           <div class="w-1/2 pr-4 pl-4">
+                           <div style="display: none;" id="signature-text-div" class="w-full pr-4 pl-4 mt-5">
+                              <label for="">Please enter you signature here</label>
+                              <input id="signature-text" name="signatureText" value="{{ old('signatureText') }}" 
+                                 class="border border-gray-300 px-4 py-3 rounded-lg w-full" type="text" autocomplete="off">
+                                 @error('signatureText')
+                                 <p style="color: red;">This fields is required</p>
+                                 @enderror
+                           </div>
+
+                           <div style="display: none;" id="date-div" class="w-full pr-4 pl-4 mt-5">
                               <!-- Add padding-left for spacing -->
+                               <label for="">Date</label>
                               <input name="consumer_date_signed" value="{{ old('consumer_date_signed') }}" 
                                  class="border border-gray-300 px-4 py-3 rounded-lg w-full" type="date" autocomplete="off">
                                  @error('consumer_date_signed')
                                  <p style="color: red;">This fields is required</p>
                                  @enderror
                            </div>
-                        </div>
-                        <br><br>
-                        <label class="mr-2 block mt-10">OR Consumer's Representative Signature:</label>
 
-                        <input class="mt-5" {{ old('ee_signature') == '1' ? 'checked' : '' }} value="1" type="checkbox" name="ee_signature" id="ee-signature-checkbox"> 
+                        
+
+                        <div class="mt-5">
+                           <label class="mr-2 block mt-10">OR Consumer's Representative Signature:</label>
+
+                           <input class="mt-5" {{ old('ee_signature') == '1' ? 'checked' : '' }} value="1" type="checkbox" name="ee_signature" id="ee-signature-checkbox"> 
                               <label for="ee-signature-checkbox">
                               By checking/ticking this box, I agree to adopt this as my electronic signature.
                               </label>
-                        <div class="flex items-center justify-between mt-5 w-full">
-                           <div class="w-1/2 pl-4">
+                        </div>
                               
-                              <div class="flex-row">
+                              <div class="flex-row mt-5">
                                  <div class="wrapper">
                                     <!-- Signature Canvas -->
                                     <canvas id="eesignature-pad" width="400" height="200" style="display: none; border:1px solid #000;"></canvas>
                                     <!-- Hidden Signature Input -->
-                                    <textarea required style="display: none;" name="consumer_rep_signature" id="eesignature-input"></textarea>
+                                    <textarea style="display: none;" name="consumer_rep_signature" id="eesignature-input"></textarea>
                                  </div>
                               </div>
                               @error('consumer_rep_signature')
@@ -262,16 +277,25 @@
                               @error('ee_signature')
                               <p style="color: red;"> Please agree to adopt signature </p>
                               @enderror
-                           </div>
-                           <div class="w-1/2 pr-4 pl-4">
+
+                              <div id="eeSignatureText-div" style="display: none;" class="mt-5">
+                                 <label for="">Enter your signature</label>
+                                 <input id="eeSignatureText" name="eeSignatureText" value="{{ old('eeSignatureText') }}" class="border border-gray-300 px-4 py-3 rounded-lg w-full" type="text" autocomplete="off">
+                              </div>
+                              @error('eeSignatureText')
+                              <p style="color: red;">This field is required</p>
+                              @enderror
+
                               <!-- Add padding-left for spacing -->
+                              <div id="eeSignDate-div" style="display: none;" class="mt-5">
                               <input name="consumer_rep_date_signed" value="{{ old('consumer_rep_date_signed') }}" class="border border-gray-300 px-4 py-3 rounded-lg w-full" type="date" autocomplete="off">
+                              </div>
                               @error('consumer_rep_date_signed')
-                           <p style="color: red;">This field is required</p>
-                           @enderror
-                           </div>
-                        </div>
-                        <div class="pass mt-5">(Print name and describe authority): 
+                              <p style="color: red;">This field is required</p>
+                              @enderror
+                           <!-- </div> -->
+                        <!-- </div> -->
+                        <div style="display: none;" id="print-name" class="pass mt-5">(Print name and describe authority): 
                            <input name="consumer_name_authority" value="{{ old('consumer_name_authority') }}" class="border-line px-4 pt-3 pb-3 w-full rounded-lg" type="text" autocomplete="off">
                            @error('consumer_name_authority')
                            <p style="color: red;">This field is required</p>
@@ -291,118 +315,143 @@
          </div>
       </div>
       @include('templates/footer')
-      <a class="scroll-to-top-btn" href="#top-nav"><i class="ph-bold ph-caret-up"></i></a>
+      <a class="scroll-to-top-btn" href="#top-nav"><i class="ph-bold ph-caret-up"></i></a> 
       <script src="{{asset('assets/js/phosphor-icons.js')}}"></script>
       <script src="{{asset('assets/js/swiper-bundle.min.js')}}"></script>
       <script src="{{asset('assets/js/main.js')}}"></script>
       <script>
-         document.addEventListener("DOMContentLoaded", function () {
-             const canvas = document.getElementById("signature-pad");
-             const ctx = canvas.getContext("2d");
-             const checkbox = document.getElementById("e-signature-checkbox");
-             const signatureInput = document.getElementById("signature-input");
-         
-             function drawSignature() {
-                 ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous signature
-         
-                 // Wait for font to load before drawing
-                 document.fonts.ready.then(() => {
-                     ctx.font = "40px 'Great Vibes', cursive"; // Apply font only inside canvas
-                     ctx.fillStyle = "#000"; // Set text color
-                     ctx.textBaseline = "middle";
-         
-                     // Get user's name from backend
-                     const userName = "{{ ucfirst($user->firstname) . ' ' . ucfirst($user->lastname) }}";
-         
-                     // Position dynamically
-                     const x = canvas.width / 10; // Start at 10% of canvas width
-                     const y = canvas.height / 2; // Center vertically
-         
-                     // Draw the signature on canvas
-                     ctx.fillText(userName, x, y);
-         
-                     // Convert canvas content to base64 image and store it
-                     signatureInput.value = canvas.toDataURL("image/png");
-                 }).catch(error => {
-                     console.error("Font loading failed:", error);
-                 });
-             }
-         
-             function handleCheckboxState() {
-                 if (checkbox.checked) {
-                     canvas.style.display = "block"; // Show canvas
-                     // signatureInput.style.display = "block"; // Show input
-                     drawSignature(); // Draw signature
-                 } else {
-                     canvas.style.display = "none"; // Hide canvas
-                     signatureInput.style.display = "none"; // Hide input
-                     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-                     signatureInput.value = ""; // Clear stored signature
-                 }
-             }
-         
-             // Listen for checkbox changes
-             checkbox.addEventListener("change", handleCheckboxState);
-         
-             // Check initial state
-             handleCheckboxState();
-         });
-         
-      </script>
-      <script>
-         document.addEventListener("DOMContentLoaded", function () {
-             const canvas = document.getElementById("eesignature-pad");
-             const ctx = canvas.getContext("2d");
-             const checkbox = document.getElementById("ee-signature-checkbox");
-             const signatureInput = document.getElementById("eesignature-input");
-         
-             function drawSignature() {
-                 ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous signature
-         
-                 // Wait for font to load before drawing
-                 document.fonts.ready.then(() => {
-                     ctx.font = "40px 'Great Vibes', cursive"; // Apply font only inside canvas
-                     ctx.fillStyle = "#000"; // Set text color
-                     ctx.textBaseline = "middle";
-         
-                     // Get user's name from backend
-                     const userName = "{{ ucfirst($user->firstname) . ' ' . ucfirst($user->lastname) }}";
-         
-                     // Position dynamically
-                     const x = canvas.width / 10; // Start at 10% of canvas width
-                     const y = canvas.height / 2; // Center vertically
-         
-                     // Draw the signature on canvas
-                     ctx.fillText(userName, x, y);
-         
-                     // Convert canvas content to base64 image and store it
-                     signatureInput.value = canvas.toDataURL("image/png");
-                 }).catch(error => {
-                     console.error("Font loading failed:", error);
-                 });
-             }
-         
-             function handleCheckboxState() {
-                 if (checkbox.checked) {
-                     canvas.style.display = "block"; // Show canvas
-                     // signatureInput.style.display = "block"; // Show input
-                     drawSignature(); // Draw signature
-                 } else {
-                     canvas.style.display = "none"; // Hide canvas
-                     signatureInput.style.display = "none"; // Hide input
-                     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-                     signatureInput.value = ""; // Clear stored signature
-                 }
-             }
-         
-             // Listen for checkbox changes
-             checkbox.addEventListener("change", handleCheckboxState);
-         
-             // Check initial state
-             handleCheckboxState();
-         });
-         
-      </script>
+document.addEventListener("DOMContentLoaded", function () {
+    const canvas = document.getElementById("signature-pad");
+    const ctx = canvas.getContext("2d");
+    const checkbox = document.getElementById("e-signature-checkbox");
+    const signatureInput = document.getElementById("signature-input");
+    const signatureTextInput = document.getElementById("signature-text");
+    const signatureTextDiv = document.getElementById('signature-text-div');
+    const dateDiv = document.getElementById("date-div");
+
+    function drawSignature(text) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous signature
+
+        if (text.trim() === "") return; // Don't draw if empty
+
+        // Wait for font to load before drawing
+        document.fonts.ready.then(() => {
+            ctx.font = "40px 'Great Vibes', cursive"; // Apply signature-style font
+            ctx.fillStyle = "#000"; // Set text color
+            ctx.textBaseline = "middle";
+
+            // Position dynamically
+            const x = canvas.width / 10; // Start at 10% of canvas width
+            const y = canvas.height / 2; // Center vertically
+
+            // Draw user-inputted signature
+            ctx.fillText(text, x, y);
+
+            // Convert canvas content to base64 image and store it
+            signatureInput.value = canvas.toDataURL("image/png");
+        }).catch(error => {
+            console.error("Font loading failed:", error);
+        });
+    }
+
+    function handleCheckboxState() {
+        if (checkbox.checked) {
+            canvas.style.display = "block"; // Show canvas
+            signatureTextDiv.style.display = "block";
+            dateDiv.style.display = "block";
+            drawSignature(signatureTextInput.value); // Draw initial signature if available
+        } else {
+            canvas.style.display = "none"; // Hide canvas
+            signatureTextDiv.style.display = "none";
+            dateDiv.style.display = "none";
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+            signatureInput.value = ""; // Clear stored signature
+        }
+    }
+
+    // Listen for checkbox changes
+    checkbox.addEventListener("change", handleCheckboxState);
+
+    // Listen for text input changes
+    signatureTextInput.addEventListener("input", function () {
+        if (checkbox.checked) {
+            drawSignature(signatureTextInput.value);
+        }
+    });
+
+    // Check initial state
+    handleCheckboxState();
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const canvas = document.getElementById("eesignature-pad");
+    const ctx = canvas.getContext("2d");
+    const checkbox = document.getElementById("ee-signature-checkbox");
+    const signatureInput = document.getElementById("eesignature-input");
+    const signatureTextInput = document.getElementById("eeSignatureText");
+    const eeSignatureTextDiv = document.getElementById("eeSignatureText-div");
+    const eeSignDateDiv = document.getElementById("eeSignDate-div");
+    const printName = document.getElementById("eeSignDateDiv");
+
+    function drawSignature(text) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous signature
+
+        if (text.trim() === "") return; // Don't draw if empty
+
+        // Wait for font to load before drawing
+        document.fonts.ready.then(() => {
+            ctx.font = "40px 'Great Vibes', cursive"; // Apply signature-style font
+            ctx.fillStyle = "#000"; // Set text color
+            ctx.textBaseline = "middle";
+
+            // Position dynamically
+            const x = canvas.width / 10; // Start at 10% of canvas width
+            const y = canvas.height / 2; // Center vertically
+
+            // Draw user-inputted signature
+            ctx.fillText(text, x, y);
+
+            // Convert canvas content to base64 image and store it
+            signatureInput.value = canvas.toDataURL("image/png");
+        }).catch(error => {
+            console.error("Font loading failed:", error);
+        });
+    }
+
+    function handleCheckboxState() {
+        if (checkbox.checked) {
+            canvas.style.display = "block"; // Show canvas
+            eeSignatureTextDiv.style.display = "block";
+            eeSignDateDiv.style.display = "block";
+            printName.style.display = "block";
+            drawSignature(signatureTextInput.value); // Draw initial signature if available
+        } else {
+            canvas.style.display = "none"; // Hide canvas
+            eeSignatureTextDiv.style.display = "none";
+            eeSignDateDiv.style.display = "none";
+            printName.style.display = "none";
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+            signatureInput.value = ""; // Clear stored signature
+        }
+    }
+
+    // Listen for checkbox changes
+    checkbox.addEventListener("change", handleCheckboxState);
+
+    // Listen for text input changes
+    signatureTextInput.addEventListener("input", function () {
+        if (checkbox.checked) {
+            drawSignature(signatureTextInput.value);
+        }
+    });
+
+    // Check initial state
+    handleCheckboxState();
+});
+</script>
+
    </body>
 </html>
 <style>
