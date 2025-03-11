@@ -227,6 +227,14 @@
                                     <p class="mt-5">Client’s name (Print) First: <i> {{ ucfirst($user->firstname) }} </i> </p>  
                                     <p>Last: <i> {{ ucfirst($user->lastname) }} </i> </p>
 
+                                    <div id="client-signature-text-div" class="pass mt-5">
+                                        <label for="">Please enter your signature here </label>
+                                        <input id="client-signature-text" name="client_signature_text" value="{{ old('client_signature_text') }}" class="border-line px-4 pt-3 pb-3 w-full rounded-lg" type="text" autocomplete="off">
+                                        @error('client_signature_text')
+                                        <p style="color: red"> {{ $message }} </p>
+                                        @enderror
+                                    </div>
+
                                     <div class="pass mt-5">
                                         <label for="">Date </label>
                                         <input name="clients_date_signed" value="{{ old('clients_date_signed') }}" class="border-line px-4 pt-3 pb-3 w-full rounded-lg" type="date" autocomplete="off">
@@ -317,60 +325,69 @@
         
         <script>
          document.addEventListener("DOMContentLoaded", function () {
-             const canvas = document.getElementById("signature-pad");
-             const ctx = canvas.getContext("2d");
-             const checkbox = document.getElementById("e-signature-checkbox");
-             const signatureInput = document.getElementById("signature-input");
+            const canvas = document.getElementById("signature-pad");
+            const ctx = canvas.getContext("2d");
+            const checkbox = document.getElementById("e-signature-checkbox");
+            const signatureInput = document.getElementById("signature-input");
+            const signatureTextInput = document.getElementById("client-signature-text");
+            const clientBox = document.getElementById("client-box");
+            // const clientSignatureTextDiv = document.getElementById("client-signature-text-div");
 
-             const client_box = document.getElementById('client-box');
-         
-             function drawSignature() {
-                 ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous signature
-         
-                 // Wait for font to load before drawing
-                 document.fonts.ready.then(() => {
-                     ctx.font = "40px 'Great Vibes', cursive"; // Apply font only inside canvas
-                     ctx.fillStyle = "#000"; // Set text color
-                     ctx.textBaseline = "middle";
-         
-                     // Get user's name from backend
-                     const userName = "{{ ucfirst($user->firstname) . ' ' . ucfirst($user->lastname) }}";
-         
-                     // Position dynamically
-                     const x = canvas.width / 10; // Start at 10% of canvas width
-                     const y = canvas.height / 2; // Center vertically
-         
-                     // Draw the signature on canvas
-                     ctx.fillText(userName, x, y);
-         
-                     // Convert canvas content to base64 image and store it
-                     signatureInput.value = canvas.toDataURL("image/png");
-                 }).catch(error => {
-                     console.error("Font loading failed:", error);
-                 });
-             }
-         
-             function handleCheckboxState() {
-                 if (checkbox.checked) {
-                     canvas.style.display = "block"; // Show canvas
-                     client_box.style.display = "block";
-                     // signatureInput.style.display = "block"; // Show input
-                     drawSignature(); // Draw signature
-                 } else {
-                     canvas.style.display = "none"; // Hide canvas
-                     client_box.style.display = "none";
-                    //  signatureInput.style.display = "none"; // Hide input
-                     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-                     signatureInput.value = ""; // Clear stored signature
-                 }
-             }
-         
-             // Listen for checkbox changes
-             checkbox.addEventListener("change", handleCheckboxState);
-         
-             // Check initial state
-             handleCheckboxState();
-         });
+            function drawSignature(text) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous signature
+
+                // Wait for font to load before drawing
+                document.fonts.ready.then(() => {
+                    ctx.font = "40px 'Great Vibes', cursive"; // Apply font inside canvas
+                    ctx.fillStyle = "#000"; // Set text color
+                    ctx.textBaseline = "middle";
+
+                    const x = canvas.width / 10; // Start at 10% of canvas width
+                    const y = canvas.height / 2; // Center vertically
+
+                    ctx.fillText(text, x, y); // Draw signature text
+
+                    // Convert canvas content to base64 image and store it
+                    signatureInput.value = canvas.toDataURL("image/png");
+                }).catch(error => {
+                    console.error("Font loading failed:", error);
+                });
+            }
+
+            function handleCheckboxState() {
+                if (checkbox.checked) {
+                    canvas.style.display = "block"; // Show canvas
+                    clientBox.style.display = "block";
+                    // clientSignatureTextDiv.style.block = "block";
+
+                    // Use default name or input value
+                    const defaultName = "{{ ucfirst($user->firstname) . ' ' . ucfirst($user->lastname) }}";
+                    const signatureText = signatureTextInput.value.trim() || defaultName;
+                    drawSignature(signatureText);
+                } else {
+                    canvas.style.display = "none"; // Hide canvas
+                    clientBox.style.display = "none";
+                    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+                    signatureInput.value = ""; // Clear stored signature
+                    // clientSignatureTextDiv.style.block = "none";
+                }
+            }
+
+            // Update canvas when typing in the input field
+            signatureTextInput.addEventListener("input", function () {
+                if (checkbox.checked) {
+                    const text = signatureTextInput.value.trim();
+                    drawSignature(text);
+                }
+            });
+
+            // Listen for checkbox changes
+            checkbox.addEventListener("change", handleCheckboxState);
+
+            // Check initial state
+            handleCheckboxState();
+        });
+
          
       </script>
 
