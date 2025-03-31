@@ -102,10 +102,9 @@
                                 <img src="{{ asset('signatures/' . Crypt::decryptString($services->client_legal_signature)) }}" alt="Signature">
                                 <p class="mt-5">Date: <i> {{ Crypt::decryptString($services->client_legal_date) }} </i></p>
 
-                                @if(!empty($services->client_rep_name))
-                                <p>Representative’s Name: <i> {{ Crypt::decryptString($services->clients_rep_name) }} </i> </p>
-                                <p>Relation to Client: <i> {{ Crypt::decryptString($services->relation_to_client) }} </i> </p>
-                                @endif
+                                <p>Representative’s Name: <i> {{ $services->clients_rep_name ? Crypt::decryptString($services->clients_rep_name) : '' }} </i> </p>
+                                <p>Relation to Client: <i> {{ $services->relation_to_client ? Crypt::decryptString($services->relation_to_client) : '' }} </i> </p>
+                                
                                
                             </div> 
                             @empty 
