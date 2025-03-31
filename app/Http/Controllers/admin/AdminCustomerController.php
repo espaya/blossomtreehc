@@ -5,12 +5,26 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\GeneralController;
 use App\Models\Address;
+use App\Models\AdvancedDirective;
+use App\Models\AuthorizationAgreement;
+use App\Models\AuthorizationForUse;
+use App\Models\ChargesForServices;
+use App\Models\ConfidentialityPolicy;
+use App\Models\ConsentForServices;
+use App\Models\ConsumerBillOfRight;
+use App\Models\ConsumerEmergency;
 use App\Models\CustomService;
+use App\Models\DescriminationByeLaws;
+use App\Models\Hippa;
+use App\Models\ListOfServices;
 use App\Models\MyServices;
+use App\Models\PolicyForInvestigating;
+use App\Models\ReportingPatientAbuse;
 use App\Models\User;
 use App\Models\UserDevice;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AdminCustomerController extends Controller
@@ -32,6 +46,46 @@ class AdminCustomerController extends Controller
         $customers = DB::table('users')->where('role', 'CUSTOMER')->paginate(10);
 
         return view('admin.customer.customer', ['pageTitle' => $pageTitle, 'user' => $user, 'customers' => $customers]);
+    }
+
+    public function showDocs($id)
+    {
+        $user = Auth::user();
+
+        $customer = User::where('id', $id)->first();
+        $pageTitle = ucfirst($customer->firstname) . ' '. ucfirst($customer->lastname);
+
+        /* Get customer forms */
+        $advance_directive = AdvancedDirective::where('customerID', $id)->get();
+        $authorization_agreement = AuthorizationAgreement::where('customerID', $id)->get();
+        $authorization_for_use = AuthorizationForUse::where('customerID', $id)->get();
+        $charges_for_services = ChargesForServices::where('customerID', $id)->get();
+        $consent_for_services = ConsentForServices::where('customerID', $id)->get();
+        $consumer_bill_of_right = ConsumerBillOfRight::where('customerID', $id)->get();
+        $consumer_emergency = ConsumerEmergency::where('customerID', $id)->get();
+        // $descrimination_bye_laws = DescriminationByeLaws::where('customerID', $id)->get();
+        $hippa = Hippa::where('customerID', $id)->get();
+        $list_of_services = ListOfServices::where('customerID', $id)->get();
+        $policy_for_investigating = PolicyForInvestigating::where('customerID', $id)->get();
+        $reporting_patient_abuse = ReportingPatientAbuse::where('customerID', $id)->get();
+
+        return view('admin.customer.single-customer-docs', 
+        [
+            'user' => $user,
+            'advance_directive' => $advance_directive,
+            'authorization_agreement' => $authorization_agreement,
+            'authorization_for_use' => $authorization_for_use,
+            'charges_for_services' => $charges_for_services,
+            'consent_for_services' => $consent_for_services,
+            'consumer_bill_of_right' => $consumer_bill_of_right,
+            'consumer_emergency' => $consumer_emergency,
+            // 'descrimination_bye_laws' => $descrimination_bye_laws,
+            'hippa' => $hippa,
+            'list_of_services' => $list_of_services,
+            'policy_for_investigating' => $policy_for_investigating,
+            'reporting_patient_abuse' => $reporting_patient_abuse,
+            'pageTitle' => $pageTitle,
+        ]);
     }
 
     public function view($id)
@@ -57,8 +111,8 @@ class AdminCustomerController extends Controller
                 
                 $pageTitle = ucfirst($profile[0]->firstname) . ' ' . ucfirst($profile[0]->lastname);
 
-                
                 $customService = DB::table('custom_service')->where('customerID', $id)->orderBy('id', 'desc')->get();
+
             
                 return view('admin.customer.single-customer', 
                 [
@@ -67,7 +121,7 @@ class AdminCustomerController extends Controller
                     'profile' => $profile, 
                     'address'=> $address,
                     'services' =>  $services,
-                    'customService' => $customService
+                    'customService' => $customService,
                 ]); 
             }
         }

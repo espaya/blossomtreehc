@@ -176,6 +176,7 @@ Route::group(['middleware' => ['auth', '2fa', 'verified','admin']], function(){
     Route::get('/account/admin', [AdminController::class, 'index'])->name('admin')->middleware(['auth', 'admin']);
     Route::get('/account/admin/customers', [AdminCustomerController::class, 'index'])->name('admin.customer');
     Route::get('/account/admin/customers/{id}', [AdminCustomerController::class, 'view'])->name('view.admin.customer');
+    Route::get('/account/admin/customers/{id}/documents', [AdminCustomerController::class, 'showDocs'])->name('view.admin.customer.docs');
     Route::get('/account/admin/services/', [AdminServiceController::class, 'index'])->name('admin.service');
     Route::get('/account/admin/services/add', [AdminServiceController::class, 'add'])->name('admin.add.service');
     Route::post('/account/admin/services/save', [AdminServiceController::class, 'save'])->name('admin.save.service');

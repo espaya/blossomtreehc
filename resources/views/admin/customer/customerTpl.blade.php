@@ -12,7 +12,8 @@
                 </div>
                     <div class="tab-item inline-block w-fit heading6 has-line-before text-secondary2 hover:text-black duration-300 active" data-item="how-to-buy">Profile</div>
                     <div class="tab-item inline-block w-fit heading6 has-line-before text-secondary2 hover:text-black duration-300" data-item="payment-methods">Address</div>
-                    <div class="tab-item inline-block w-fit heading6 has-line-before text-secondary2 hover:text-black duration-300" data-item="delivery">Client's Services</div>
+                    <div class="tab-item inline-block w-fit heading6 has-line-before text-secondary2 hover:text-black duration-300" data-item="delivery">Services</div>
+                    <a class="inline-block w-fit heading6 has-line-before text-secondary2 hover:text-black duration-300" href="{{ route('view.admin.customer.docs', ['id' => $profile[0]->id]) }}">Docs</a>
                 </div>
             </div>
 
@@ -110,6 +111,7 @@
 
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
