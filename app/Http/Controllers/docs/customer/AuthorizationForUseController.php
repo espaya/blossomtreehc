@@ -67,11 +67,13 @@ class AuthorizationForUseController extends Controller
 
             $storagePath = public_path('signatures');
 
-            if (!File::exists($storagePath)) {
+            if (!File::exists($storagePath)) 
+            {
                 File::makeDirectory($storagePath, 0755, true, true);
             }
 
-            if ($request->has('consumer_signature')) {
+            if ($request->consumer_signature && $request->has('consumer_signature')) 
+            {
                 $signatureData = $request->consumer_signature;
                 $image = preg_replace('/^data:image\/png;base64,/', '', $signatureData);
                 $imageData = base64_decode($image);
@@ -81,7 +83,8 @@ class AuthorizationForUseController extends Controller
                 File::put($filePath, $imageData);
             }
 
-            if ($request->has('consumer_rep_signature')) {
+            if ($request->has('consumer_rep_signature')) 
+            {
                 $repSignatureData = $request->consumer_rep_signature;
                 $image = preg_replace('/^data:image\/png;base64,/', '', $repSignatureData);
                 $imageData = base64_decode($image);

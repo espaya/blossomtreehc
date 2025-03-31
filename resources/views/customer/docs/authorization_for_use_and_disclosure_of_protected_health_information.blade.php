@@ -134,11 +134,11 @@
                            <div class="w-1/2 pr-4 pl-4">
                               <!-- Add padding-left for spacing -->
                                <label for="">Date Signed</label>
-                               <p><i> {{ Crypt::decryptString($authorization->consumer_rep_date_signed) }} </i></p>
+                               <p><i> {{ $authorization->consumer_rep_date_signed ? Crypt::decryptString($authorization->consumer_rep_date_signed) : '' }} </i></p>
                            </div>
                         </div>
                         <div class="pass mt-5">(Print name and describe authority):
-                           <p> {{ Crypt::decryptString($authorization->consumer_name_authority) }} </p> 
+                           <p> {{ $authorization->consumer_name_authority ? Crypt::decryptString($authorization->consumer_name_authority) : '' }} </p> 
                         </div>
                         @endif
                         <br>
@@ -320,137 +320,152 @@
       <script src="{{asset('assets/js/swiper-bundle.min.js')}}"></script>
       <script src="{{asset('assets/js/main.js')}}"></script>
       <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const canvas = document.getElementById("signature-pad");
-    const ctx = canvas.getContext("2d");
-    const checkbox = document.getElementById("e-signature-checkbox");
-    const signatureInput = document.getElementById("signature-input");
-    const signatureTextInput = document.getElementById("signature-text");
-    const signatureTextDiv = document.getElementById('signature-text-div');
-    const dateDiv = document.getElementById("date-div");
+         document.addEventListener("DOMContentLoaded", function () {
+            const canvas = document.getElementById("signature-pad");
+            const ctx = canvas.getContext("2d");
+            const checkbox = document.getElementById("e-signature-checkbox");
+            const signatureInput = document.getElementById("signature-input");
+            const signatureTextInput = document.getElementById("signature-text");
+            const signatureTextDiv = document.getElementById('signature-text-div');
+            const dateDiv = document.getElementById("date-div");
 
-    function drawSignature(text) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous signature
+            function drawSignature(text) {
+               ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous signature
 
-        if (text.trim() === "") return; // Don't draw if empty
+               if (text.trim() === "") return; // Don't draw if empty
 
-        // Wait for font to load before drawing
-        document.fonts.ready.then(() => {
-            ctx.font = "40px 'Great Vibes', cursive"; // Apply signature-style font
-            ctx.fillStyle = "#000"; // Set text color
-            ctx.textBaseline = "middle";
+               // Wait for font to load before drawing
+               document.fonts.ready.then(() => {
+                     ctx.font = "40px 'Great Vibes', cursive"; // Apply signature-style font
+                     ctx.fillStyle = "#000"; // Set text color
+                     ctx.textBaseline = "middle";
 
-            // Position dynamically
-            const x = canvas.width / 10; // Start at 10% of canvas width
-            const y = canvas.height / 2; // Center vertically
+                     // Position dynamically
+                     const x = canvas.width / 10; // Start at 10% of canvas width
+                     const y = canvas.height / 2; // Center vertically
 
-            // Draw user-inputted signature
-            ctx.fillText(text, x, y);
+                     // Draw user-inputted signature
+                     ctx.fillText(text, x, y);
 
-            // Convert canvas content to base64 image and store it
-            signatureInput.value = canvas.toDataURL("image/png");
-        }).catch(error => {
-            console.error("Font loading failed:", error);
-        });
-    }
+                     // Convert canvas content to base64 image and store it
+                     signatureInput.value = canvas.toDataURL("image/png");
+               }).catch(error => {
+                     console.error("Font loading failed:", error);
+               });
+            }
 
-    function handleCheckboxState() {
-        if (checkbox.checked) {
-            canvas.style.display = "block"; // Show canvas
-            signatureTextDiv.style.display = "block";
-            dateDiv.style.display = "block";
-            drawSignature(signatureTextInput.value); // Draw initial signature if available
-        } else {
-            canvas.style.display = "none"; // Hide canvas
-            signatureTextDiv.style.display = "none";
-            dateDiv.style.display = "none";
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-            signatureInput.value = ""; // Clear stored signature
-        }
-    }
+            function handleCheckboxState() {
+               if (checkbox.checked) {
+                     canvas.style.display = "block"; // Show canvas
+                     signatureTextDiv.style.display = "block";
+                     dateDiv.style.display = "block";
+                     drawSignature(signatureTextInput.value); // Draw initial signature if available
+               } else {
+                     canvas.style.display = "none"; // Hide canvas
+                     signatureTextDiv.style.display = "none";
+                     dateDiv.style.display = "none";
+                     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+                     signatureInput.value = ""; // Clear stored signature
+               }
+            }
 
-    // Listen for checkbox changes
-    checkbox.addEventListener("change", handleCheckboxState);
+            // Listen for checkbox changes
+            checkbox.addEventListener("change", handleCheckboxState);
 
-    // Listen for text input changes
-    signatureTextInput.addEventListener("input", function () {
-        if (checkbox.checked) {
-            drawSignature(signatureTextInput.value);
-        }
-    });
+            // Listen for text input changes
+            signatureTextInput.addEventListener("input", function () {
+               if (checkbox.checked) {
+                     drawSignature(signatureTextInput.value);
+               }
+            });
 
-    // Check initial state
-    handleCheckboxState();
-});
-</script>
+            // Check initial state
+            handleCheckboxState();
+         });
+      </script>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const canvas = document.getElementById("eesignature-pad");
-    const ctx = canvas.getContext("2d");
-    const checkbox = document.getElementById("ee-signature-checkbox");
-    const signatureInput = document.getElementById("eesignature-input");
-    const signatureTextInput = document.getElementById("eeSignatureText");
-    const eeSignatureTextDiv = document.getElementById("eeSignatureText-div");
-    const eeSignDateDiv = document.getElementById("eeSignDate-div");
-    const printName = document.getElementById("eeSignDateDiv");
+      <script>
+         document.addEventListener("DOMContentLoaded", function () {
+            const canvas = document.getElementById("eesignature-pad");
+            const ctx = canvas.getContext("2d");
+            const checkbox = document.getElementById("ee-signature-checkbox");
+            const signatureInput = document.getElementById("eesignature-input");
+            const signatureTextInput = document.getElementById("eeSignatureText");
+            const eeSignatureTextDiv = document.getElementById("eeSignatureText-div");
+            const eeSignDateDiv = document.getElementById("eeSignDate-div");
+            const printName = document.getElementById("print-name");
 
-    function drawSignature(text) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous signature
+            function drawSignature(text) {
+               ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous signature
 
-        if (text.trim() === "") return; // Don't draw if empty
+               if (text.trim() === "") {
+                     signatureInput.value = ""; // Ensure empty signature is cleared
+                     return;
+               }
 
-        // Wait for font to load before drawing
-        document.fonts.ready.then(() => {
-            ctx.font = "40px 'Great Vibes', cursive"; // Apply signature-style font
-            ctx.fillStyle = "#000"; // Set text color
-            ctx.textBaseline = "middle";
+               // Wait for font to load before drawing
+               document.fonts.ready.then(() => {
+                     ctx.font = "40px 'Great Vibes', cursive"; // Apply signature-style font
+                     ctx.fillStyle = "#000"; // Set text color
+                     ctx.textBaseline = "middle";
 
-            // Position dynamically
-            const x = canvas.width / 10; // Start at 10% of canvas width
-            const y = canvas.height / 2; // Center vertically
+                     // Position dynamically
+                     const x = canvas.width / 10; // Start at 10% of canvas width
+                     const y = canvas.height / 2; // Center vertically
 
-            // Draw user-inputted signature
-            ctx.fillText(text, x, y);
+                     // Draw user-inputted signature
+                     ctx.fillText(text, x, y);
 
-            // Convert canvas content to base64 image and store it
-            signatureInput.value = canvas.toDataURL("image/png");
-        }).catch(error => {
-            console.error("Font loading failed:", error);
-        });
-    }
+                     // Convert canvas content to base64 image and store it
+                     const signatureImage = canvas.toDataURL("image/png");
+                     signatureInput.value = signatureImage; // Store in hidden input
 
-    function handleCheckboxState() {
-        if (checkbox.checked) {
-            canvas.style.display = "block"; // Show canvas
-            eeSignatureTextDiv.style.display = "block";
-            eeSignDateDiv.style.display = "block";
-            printName.style.display = "block";
-            drawSignature(signatureTextInput.value); // Draw initial signature if available
-        } else {
-            canvas.style.display = "none"; // Hide canvas
-            eeSignatureTextDiv.style.display = "none";
-            eeSignDateDiv.style.display = "none";
-            printName.style.display = "none";
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-            signatureInput.value = ""; // Clear stored signature
-        }
-    }
+                     console.log("Signature saved:", signatureImage); // Debugging
+               }).catch(error => {
+                     console.error("Font loading failed:", error);
+               });
+            }
 
-    // Listen for checkbox changes
-    checkbox.addEventListener("change", handleCheckboxState);
+            function handleCheckboxState() {
+               if (checkbox.checked) {
+                     canvas.style.display = "block"; // Show canvas
+                     eeSignatureTextDiv.style.display = "block";
+                     eeSignDateDiv.style.display = "block";
+                     printName.style.display = "block";
+                     drawSignature(signatureTextInput.value); // Draw initial signature if available
+               } else {
+                     canvas.style.display = "none"; // Hide canvas
+                     eeSignatureTextDiv.style.display = "none";
+                     eeSignDateDiv.style.display = "none";
+                     printName.style.display = "none";
+                     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+                     signatureInput.value = ""; // Clear stored signature
+               }
+            }
 
-    // Listen for text input changes
-    signatureTextInput.addEventListener("input", function () {
-        if (checkbox.checked) {
-            drawSignature(signatureTextInput.value);
-        }
-    });
+            // Listen for checkbox changes
+            checkbox.addEventListener("change", handleCheckboxState);
 
-    // Check initial state
-    handleCheckboxState();
-});
-</script>
+            // Listen for text input changes
+            signatureTextInput.addEventListener("input", function () {
+               if (checkbox.checked) {
+                     drawSignature(signatureTextInput.value);
+               }
+            });
+
+            // Ensure the form submits correctly
+            document.querySelector("form").addEventListener("submit", function (event) {
+               if (checkbox.checked && signatureInput.value.trim() === "") {
+                     alert("Please provide a signature before submitting.");
+                     event.preventDefault();
+               }
+            });
+
+            // Check initial state
+            handleCheckboxState();
+         });
+      </script>
+
 
    </body>
 </html>
