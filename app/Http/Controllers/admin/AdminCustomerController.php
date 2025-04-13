@@ -85,6 +85,7 @@ class AdminCustomerController extends Controller
             'policy_for_investigating' => $policy_for_investigating,
             'reporting_patient_abuse' => $reporting_patient_abuse,
             'pageTitle' => $pageTitle,
+            'customer' => $customer
         ]);
     }
 

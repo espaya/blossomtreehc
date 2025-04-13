@@ -21,6 +21,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\docs\admin\AdminAdvancedDirectiveController;
+use App\Http\Controllers\docs\admin\AdminAuthorizationAgreementController;
+use App\Http\Controllers\docs\admin\AdminAuthorizationForUseController;
+use App\Http\Controllers\docs\admin\AdminChargesForServicesController;
+use App\Http\Controllers\docs\admin\AdminConsentForServices;
+use App\Http\Controllers\docs\admin\AdminConsumerBillOfRightController;
+use App\Http\Controllers\docs\admin\AdminConsumerEmergencyController;
+use App\Http\Controllers\docs\admin\AdminDiscriminationByeLawsController;
+use App\Http\Controllers\docs\admin\AdminHipaaController;
+use App\Http\Controllers\docs\admin\AdminListOfServicesController;
+use App\Http\Controllers\docs\admin\AdminPolicyForInvestigatingController;
+use App\Http\Controllers\docs\admin\AdminReportingPatientAbuse;
 use App\Http\Controllers\docs\customer\AdvancedDirectiveController;
 use App\Http\Controllers\docs\customer\AuthorizationAgreementController;
 use App\Http\Controllers\docs\customer\AuthorizationForUseController;
@@ -176,7 +188,45 @@ Route::group(['middleware' => ['auth', '2fa', 'verified','admin']], function(){
     Route::get('/account/admin', [AdminController::class, 'index'])->name('admin')->middleware(['auth', 'admin']);
     Route::get('/account/admin/customers', [AdminCustomerController::class, 'index'])->name('admin.customer');
     Route::get('/account/admin/customers/{id}', [AdminCustomerController::class, 'view'])->name('view.admin.customer');
+
     Route::get('/account/admin/customers/{id}/documents', [AdminCustomerController::class, 'showDocs'])->name('view.admin.customer.docs');
+
+    Route::get('/account/admin/customers/{id}/documents/advance-directive-acknowledgement-hippa-home-care-privacy-rights/{docID}', 
+    [AdminAdvancedDirectiveController::class, 'index'])->name('admin.customer.advance.directive');
+
+    Route::get('/account/admin/customers/{id}/documents/authorization-agreement-and-acknowledgement/{docID}', [
+        AdminAuthorizationAgreementController::class, 'index'])->name('admin.customer.authorization.agreement');
+
+    Route::get('/account/admin/customers/{id}/documents/authorization-for-use-and-disclosure-of-protected-health-information/{docID}', [
+        AdminAuthorizationForUseController::class, 'index'])->name('admin.customer.authorization.for.use');
+
+    Route::get('/account/admin/customers/{id}/documents/charges-for-services/{docID}', [
+        AdminChargesForServicesController::class, 'index'])->name('admin.customer.charges.for.services');
+
+    Route::get('/account/admin/customers/{id}/documents/consent-for-services-and-financial-agreement/{docID}', [
+        AdminConsentForServices::class, 'index'])->name('admin.customer.consent.for.services');
+
+    Route::get('/account/admin/customers/{id}/documents/consumer-bill-of-rights/{docID}', [
+        AdminConsumerBillOfRightController::class, 'index'])->name('admin.customer.consumer.bill');
+
+    Route::get('/account/admin/customers/{id}/documents/consumer-emergency-and-contact-information/{docID}', [
+        AdminConsumerEmergencyController::class, 'index'])->name('admin.customer.consumer.emergency');
+
+    Route::get('/account/admin/customers/{id}/documents/hipaa/{docID}', [
+        AdminHipaaController::class, 'index'])->name('admin.customer.hipaa');
+
+    Route::get('/account/admin/customers/{id}/documents/list-of-services-provided/{docID}', [
+        AdminListOfServicesController::class, 'index'])->name('admin.customer.list.of.service');
+
+    Route::get('/account/admin/customers/{id}/documents/policy-for-investigating-any-grievances-by-a-client-or-designated-representative/{docID}', [
+        AdminPolicyForInvestigatingController::class, 'index'])->name('admin.customer.policy.for.investigating');
+
+    Route::get('/account/admin/customers/{id}/documents/reporting-patient-abuse-and-neglect/{docID}', [
+        AdminReportingPatientAbuse::class, 'index'])->name('admin.customer.reporting.patient.abuse');
+
+    // Route::get('/account/admin/customers/{id}/documents/consumer-emergency-and-contact-information/{docID}', [
+        // AdminDiscriminationByeLawsController::class, 'index'])->name('admin.customer.discrimination.bye.laws');
+
     Route::get('/account/admin/services/', [AdminServiceController::class, 'index'])->name('admin.service');
     Route::get('/account/admin/services/add', [AdminServiceController::class, 'add'])->name('admin.add.service');
     Route::post('/account/admin/services/save', [AdminServiceController::class, 'save'])->name('admin.save.service');
