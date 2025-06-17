@@ -56,11 +56,41 @@ class RegisterController extends Controller
             'firstname' => ['required', 'string', 'max:255', 'min:3'],
             'lastname' => ['required', 'string', 'max:255', 'min:3'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/'],
+            'password' => ['required', 'string', 'confirmed', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/'],
             'password_confirmation' => ['same:password'],
             'phone' => ['required'],
             'termsCondition' => ['required'],
             'g-recaptcha-response' => ['required', 'captcha'],  // ReCAPTCHA validation
+        ], [
+            'firstname.required' => 'This field is required',
+            'firstname.string' => 'This field contains invalid inputs',
+            'firstname.max' => 'This field is too long',
+            'firstname.min' => 'This field is too short.',
+
+            'lastname.required' => 'This field is required',
+            'lastname.string' => 'This field contains invalid input',
+            'lastname.max' => 'This field is too long',
+            'lastname.min' => 'This field is too short',
+
+            'email.required' => 'This field is required',
+            'email.string' => 'This field contains invalid inputs',
+            'email.email' => 'Invalid email format',
+            'email.max' => 'This field is too long',
+            'email.unique' => 'Email already exists',
+
+            'password.required' => 'This field is required',
+            'password.string' => 'This field contains invalid inputs',
+            'password.confirmed' => 'Please confirm the password',
+            'password.regex' => 'This field must contain at leat an uppercase, a lowercase, a number and a special characters and not less that 8 characters long',
+
+            'password_confirmation.same' => 'Passwords do not match.',
+
+            'phone.required' => 'This field is required',
+
+            'termsConditions.required' => 'Please accept our terms and conditions',
+
+            'g-recaptcha-response.required' => 'This field is required',
+            'g-recaptcha-response.captcha' => 'This field contains invali inputs',
         ]); 
     }
 
