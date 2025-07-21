@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Your Two-Factor Authentication Code</title>
+    <title>Your Two-Factor Authentication</title>
 </head>
 <body>
     <p>Hello {{ ucfirst($user->firstname) }}, your Two-Factor Authentication code is: <strong><u>{{ $code }}</u></strong>. Please enter this code to complete your 2FA setup.</p>

@@ -18,6 +18,9 @@
                 <div class="content-main flex gap-y-8 max-md:flex-col">
                     <div class="left md:w-1/2 w-full lg:pr-[60px] md:pr-[40px] md:border-r border-line">
                         <div class="heading5">Sign In</div>
+                        @if(session('error'))
+                            <p style="color: red; margin-top: 10px"> {{ session('error') }} </p>
+                        @endif
                         <form action="{{ route('login') }}" method="post" class="md:mt-7 mt-4">
                             @csrf
                             <div class="email">

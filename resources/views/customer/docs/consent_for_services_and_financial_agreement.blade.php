@@ -37,6 +37,9 @@
             <div class="content-main lg:px-[60px] md:px-4 flex gap-y-8 max-md:flex-col w-full">
                @include('customer/menu/menu')
                <div class="right xl:w-2/3 md:w-7/12 w-full xl:pl-[40px] lg:pl-[28px] md:pl-[16px] flex items-start justify-center">
+                  @if(session('error'))
+                  <p style="color:red"> {{ session('error') }} </p>
+                  @endif
                   @if($consent && $consent->isNotEmpty())
                   @forelse($consent as $consent)
                   <div class="w-full">

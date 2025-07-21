@@ -91,6 +91,9 @@
                   @endforelse
                   @else
                   <form action="{{ route('account.charges.for.services') }}" method="post" enctype="multipart/form-data">
+                     @if(session('error'))
+                     <p style="color:red"> {{ session('error') }} </p>
+                     @endif
                      @csrf
                      <div class="w-full">
                         <p style="text-align: center;">BLOSSOM TREE HOME HEALTHCARE SERVICES LLC</p>
@@ -206,7 +209,7 @@
                            @enderror
                         </div>
                         <div class="block-button md:mt-7 mt-4">
-                           <button type="" class="button-main">Submit</button>
+                           <button type="submit" class="button-main" style="background-color: blue;">Submit</button>
                            <a href="#" onclick="window.history.back();" class="button-main">Back</a>
                         </div>
                      </div>
@@ -263,6 +266,7 @@
                      client_firstname.style.display = "block";
                      client_lastname.style.display = "block";
                      signatureTextInput.style.display = "block";
+                     client_signed_date.style.display = "block";
 
                      // Use the value from input or fallback to user's name
                      const defaultSignature = signatureTextInput.value.trim() || 
