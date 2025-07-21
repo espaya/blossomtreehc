@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class ChargesForServicesController extends Controller
 {
@@ -37,6 +38,8 @@ class ChargesForServicesController extends Controller
 
     public function save(Request $request)
     {
+        Log::error($request->all());
+        
         $request->validate([
             'e_signature' => ['nullable', 'boolean', 'required_without_all:ee_signature'],
             'ee_signature' => ['nullable', 'boolean', 'required_without_all:e_signature'],        
@@ -98,7 +101,7 @@ class ChargesForServicesController extends Controller
             }
 
             // ✅ Store in Database
-            ChargesForServices::create([
+            $chargesForServices =  ChargesForServices::create([
                 'clients_signature' => $signatureFileName ? Crypt::encryptString($signatureFileName) : null,
                 'clients_signed_date' => $request->clients_signed_date ? Crypt::encryptString($request->clients_signed_date) : null,
                 'clients_rep_signature' => $repSignatureFileName ? Crypt::encryptString($repSignatureFileName) : null,
@@ -110,12 +113,23 @@ class ChargesForServicesController extends Controller
 
             DB::commit(); // ✅ Commit transaction
 
-            return redirect()->back()->with(['success' => 'Document Signed Successfully']);
+            if($chargesForServices)
+            {
+                 return redirect()->back()->with(['success' => 'Document Signed Successfully']);
+            }
+            else 
+            {
+                 return redirect()->back()->with(['error' => 'Could not save document']);
+            }
+
+           
 
         }
         catch(Exception $ex)
         {
             DB::rollBack();
+
+            Log::error($ex->getMessage());
 
             return redirect()->back()->with(['error' => $ex->getMessage()]);
         }

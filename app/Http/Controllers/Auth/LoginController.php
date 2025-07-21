@@ -142,7 +142,7 @@ class LoginController extends Controller
         $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
-            // 'g-recaptcha-response' => ['required', 'captcha'],
+            'g-recaptcha-response' => ['required', 'captcha'],
         ], [
             'email.required' => 'This field is required',
             'email.email' => 'Invalid input',
@@ -233,6 +233,9 @@ class LoginController extends Controller
 
                 return redirect()->route('2fa.setup');
             }
+
+            return redirect()->back()->with(['error' => 'Could not sign in. Try again later']);
+
         } catch (Exception $ex) {
             Log::error($ex->getMessage());
             return redirect()->back()->with(['error' => 'Could not sign in. Try again later']);

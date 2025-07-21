@@ -30,7 +30,7 @@ class TwoFactorCodeMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Two Factor Code Mail',
+            subject: 'Your Two-Factor Authentication',
         );
     }
 

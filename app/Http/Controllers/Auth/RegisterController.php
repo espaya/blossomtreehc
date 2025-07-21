@@ -60,7 +60,7 @@ class RegisterController extends Controller
             'password_confirmation' => ['same:password'],
             'phone' => ['required'],
             'termsCondition' => ['required'],
-            'g-recaptcha-response' => ['required', 'captcha'],  // ReCAPTCHA validation
+            // 'g-recaptcha-response' => ['required', 'captcha'],  // ReCAPTCHA validation
         ], [
             'firstname.required' => 'This field is required',
             'firstname.string' => 'This field contains invalid inputs',
