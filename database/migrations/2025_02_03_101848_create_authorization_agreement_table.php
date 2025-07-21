@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('authorization_agreement', function (Blueprint $table) {
             $table->id();
-            $table->string('consumer_signature')->nullable();
-            $table->string('consumer_signed_date')->nullable();
-            $table->String('agency_rep_name')->nullable();
-            $table->string('agency_rep_signature')->nullable();
-            $table->string('agency_signed_date')->nullable();
-            $table->String('customerID')->nullable();
+            $table->text('consumer_signature')->nullable();
+            $table->text('consumer_signed_date')->nullable();
+            $table->text('agency_rep_name')->nullable();
+            $table->text('agency_rep_signature')->nullable();
+            $table->text('agency_signed_date')->nullable();
+            $table->text('customerID')->nullable();
             $table->timestamps();
         });
     }

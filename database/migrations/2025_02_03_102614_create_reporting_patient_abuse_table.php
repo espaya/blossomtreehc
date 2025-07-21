@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('reporting_patient_abuse', function (Blueprint $table) {
             $table->id();
-            $table->string('clients_signature')->nullable();
-            $table->string('clients_date_signed')->nullable();
-            $table->string('agency_rep_name')->nullable();
-            $table->string('agency_rep_signture')->nullable();
-            $table->string('agency_date_signed')->nullable();
-            $table->string('customerID');
+            $table->text('clients_signature')->nullable();
+            $table->text('clients_date_signed')->nullable();
+            $table->text('agency_rep_name')->nullable();
+            $table->text('agency_rep_signture')->nullable();
+            $table->text('agency_date_signed')->nullable();
+            $table->text('customerID');
             $table->timestamps();
         });
     }

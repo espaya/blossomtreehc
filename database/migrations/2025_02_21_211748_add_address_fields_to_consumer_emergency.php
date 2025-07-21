@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('consumer_emergency', function (Blueprint $table) {
-            $table->string('address')->nullable();
-            $table->string('city')->nullable();
-            $table->string('state')->nullable();
-            $table->string('zip')->nullable();
+            $table->text('address')->nullable();
+            $table->text('city')->nullable();
+            $table->text('state')->nullable();
+            $table->text('zip')->nullable();
         });
     }
 

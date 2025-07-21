@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('list_of_services', function (Blueprint $table) {
             $table->id();
-            $table->string('client_legal_signature')->nullable();
-            $table->string('client_legal_date')->nullable();
-            $table->string('clients_rep_name')->nullable();
-            $table->string('relation_to_client')->nullable();
-            $table->string('agency_rep_name')->nullable();
-            $table->string('agency_rep_signature')->nullable();
-            $table->string('agency_signed_date')->nullable();
-            $table->string('customerID')->nullable();
+            $table->text('client_legal_signature')->nullable();
+            $table->text('client_legal_date')->nullable();
+            $table->text('clients_rep_name')->nullable();
+            $table->text('relation_to_client')->nullable();
+            $table->text('agency_rep_name')->nullable();
+            $table->text('agency_rep_signature')->nullable();
+            $table->text('agency_signed_date')->nullable();
+            $table->text('customerID')->nullable();
             $table->timestamps();
         });
     }

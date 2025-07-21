@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('consent_for_services', function (Blueprint $table) {
             $table->id();
-            $table->string('medical_record_number');
-            $table->string('consent');
-            $table->string('client_agent_signature');
-            $table->string('client_agent_name');
-            $table->string('relationship');
-            $table->string('client_date_signed');
-            $table->string('agency_rep_signature');
+            $table->text('medical_record_number');
+            $table->text('consent');
+            $table->text('client_agent_signature');
+            $table->text('client_agent_name');
+            $table->text('relationship');
+            $table->text('client_date_signed');
+            $table->text('agency_rep_signature');
             $table->String('agency_rep_name');
-            $table->string('title');
+            $table->text('title');
             $table->String('agency_signed_date');
-            $table->string('customerID');
+            $table->text('customerID');
             $table->timestamps();
         });
     }

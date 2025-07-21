@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('contract_form_amended', function (Blueprint $table) {
-            $table->string('initial')->nullable();
+            $table->text('initial')->nullable();
         });
     }
 

@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('advanced_directive', function (Blueprint $table) {
             $table->id();
-            $table->string('medical_record_number');
-            $table->string('living_will')->nullable();
-            $table->string('statutory_power')->nullable();
-            $table->string('confirm')->nullable();
-            $table->string('clients_signature');
-            $table->string('clients_signed_date');
+            $table->text('medical_record_number');
+            $table->text('living_will')->nullable();
+            $table->text('statutory_power')->nullable();
+            $table->text('confirm')->nullable();
+            $table->text('clients_signature');
+            $table->text('clients_signed_date');
 
-            $table->string('agency_witness_name')->nullable();
-            $table->string('agency_witness_signature')->nullable();
-            $table->string('agency_signed_date')->nullable();
-            $table->string('customerID');
+            $table->text('agency_witness_name')->nullable();
+            $table->text('agency_witness_signature')->nullable();
+            $table->text('agency_signed_date')->nullable();
+            $table->text('customerID');
             $table->timestamps();
         });
     }

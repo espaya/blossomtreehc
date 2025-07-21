@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('confidentiality_policy', function (Blueprint $table) {
             $table->id();
-            $table->String('signature')->nullable();
-            $table->string('date_signed')->nullable();
-            $table->string('customerID')->nullable();
+            $table->text('signature')->nullable();
+            $table->text('date_signed')->nullable();
+            $table->text('customerID')->nullable();
             $table->timestamps();
         });
     }

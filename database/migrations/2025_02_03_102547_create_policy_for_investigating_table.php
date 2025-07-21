@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('policy_for_investigating', function (Blueprint $table) {
             $table->id();
-            $table->string('customerID')->nullable();
-            $table->string('clients_rep_name')->nullable();
-            $table->string('clients_rep_date')->nullable();
-            $table->string('agency_rep_name')->nullable();
-            $table->string('agency_rep_date')->nullable();
+            $table->text('customerID')->nullable();
+            $table->text('clients_rep_name')->nullable();
+            $table->text('clients_rep_date')->nullable();
+            $table->text('agency_rep_name')->nullable();
+            $table->text('agency_rep_date')->nullable();
             $table->timestamps();
         });
     }

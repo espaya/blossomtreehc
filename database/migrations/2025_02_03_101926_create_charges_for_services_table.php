@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('charges_for_services', function (Blueprint $table) {
             $table->id();
-            $table->string('clients_signature')->nullable();
-            $table->string('clients_signed_date')->nullable();
-            $table->string('clients_rep_signature')->nullable();
-            $table->string('clients_rep_firstname')->nullable();
-            $table->string('clients_rep_lastname')->nullable();
-            $table->string('clients_rep_date_signed')->nullable();
-            $table->string('agency_rep_signature')->nullable();
-            $table->string('agency_rep_name')->nullable();
-            $table->string('agency_date_signed')->nullable();
-            $table->string('customerID')->nullable();
+            $table->text('clients_signature')->nullable();
+            $table->text('clients_signed_date')->nullable();
+            $table->text('clients_rep_signature')->nullable();
+            $table->text('clients_rep_firstname')->nullable();
+            $table->text('clients_rep_lastname')->nullable();
+            $table->text('clients_rep_date_signed')->nullable();
+            $table->text('agency_rep_signature')->nullable();
+            $table->text('agency_rep_name')->nullable();
+            $table->text('agency_date_signed')->nullable();
+            $table->text('customerID')->nullable();
             $table->timestamps();
         });
     }

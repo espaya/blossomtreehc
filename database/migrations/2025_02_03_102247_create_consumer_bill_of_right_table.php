@@ -13,19 +13,19 @@ return new class extends Migration
     {
         Schema::create('consumer_bill_of_right', function (Blueprint $table) {
             $table->id();
-            $table->string('clients_signature')->nullable();
-            $table->string('clients_date_signed')->nullable();
+            $table->text('clients_signature')->nullable();
+            $table->text('clients_date_signed')->nullable();
 
-            $table->string('clients_rep_signature')->nullable();
-            $table->string('clients_rep_firstname')->nullable();
-            $table->string('clients_rep_lastname')->nullable();
-            $table->string('clients_signed_date')->nullable();
+            $table->text('clients_rep_signature')->nullable();
+            $table->text('clients_rep_firstname')->nullable();
+            $table->text('clients_rep_lastname')->nullable();
+            $table->text('clients_signed_date')->nullable();
 
-            $table->string('agency_rep_signature')->nullable();
-            $table->string('agency_rep_name')->nullable();
-            $table->string('agency_signed_date')->nullable();
+            $table->text('agency_rep_signature')->nullable();
+            $table->text('agency_rep_name')->nullable();
+            $table->text('agency_signed_date')->nullable();
 
-            $table->string('customerID')->nullable();
+            $table->text('customerID')->nullable();
             $table->timestamps();
         });
     }

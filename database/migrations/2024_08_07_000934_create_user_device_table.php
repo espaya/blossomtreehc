@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('user_device', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('device');
-            $table->string('platform');
-            $table->string('platform_version');
-            $table->string('browser');
-            $table->string('browser_version');
+            $table->text('device');
+            $table->text('platform');
+            $table->text('platform_version');
+            $table->text('browser');
+            $table->text('browser_version');
             $table->timestamps();
         });
     }

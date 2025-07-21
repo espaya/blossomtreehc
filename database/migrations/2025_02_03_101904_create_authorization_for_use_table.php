@@ -13,25 +13,25 @@ return new class extends Migration
     {
         Schema::create('authorization_for_use', function (Blueprint $table) {
             $table->id();
-            $table->string('consent')->nullable();
-            $table->string('disclose_to')->nullable();
-            $table->string('hiv')->nullable();
-            $table->string('alcohol_substance')->nullable();
-            $table->string('psychotherapy')->nullable();
-            $table->string('other')->nullable();
-            $table->string('specify')->nullable();
+            $table->text('consent')->nullable();
+            $table->text('disclose_to')->nullable();
+            $table->text('hiv')->nullable();
+            $table->text('alcohol_substance')->nullable();
+            $table->text('psychotherapy')->nullable();
+            $table->text('other')->nullable();
+            $table->text('specify')->nullable();
 
-            $table->string('consumer_signature')->nullable();
-            $table->string('consumer_date_signed')->nullable();
+            $table->text('consumer_signature')->nullable();
+            $table->text('consumer_date_signed')->nullable();
 
-            $table->string('consumer_rep_signature')->nullable();
+            $table->text('consumer_rep_signature')->nullable();
             $table->String('consumer_rep_date_signed')->nullable();
-            $table->string('consumer_name_authority')->nullable();
+            $table->text('consumer_name_authority')->nullable();
 
-            $table->string('agency_rep_signature')->nullable();
-            $table->string('agency_rep_title')->nullable();
+            $table->text('agency_rep_signature')->nullable();
+            $table->text('agency_rep_title')->nullable();
             $table->String('agency_signed_date')->nullable();
-            $table->string('customerID')->nullable();
+            $table->text('customerID')->nullable();
             $table->timestamps();
         });
     }

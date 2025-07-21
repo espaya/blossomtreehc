@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('careers', function (Blueprint $table) {
             $table->id();
-            $table->string('firstname');
-            $table->string('lastname');
-            $table->string('email');
-            $table->string('phone');
-            $table->string('position');
-            $table->string('resume');
+            $table->text('firstname');
+            $table->text('lastname');
+            $table->text('email');
+            $table->text('phone');
+            $table->text('position');
+            $table->text('resume');
             $table->text('message');
             $table->timestamps();
         });

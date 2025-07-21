@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('authorization_for_use', function (Blueprint $table) {
-            $table->longText('disclose_to')->change(); // Change from string to longText
+            $table->longText('disclose_to')->change(); // Change from text to longText
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('authorization_for_use', function (Blueprint $table) {
-            $table->string('disclose_to', 255)->change(); // Rollback to the original type
+            $table->text('disclose_to', 255)->change(); // Rollback to the original type
         });
     }
 };
